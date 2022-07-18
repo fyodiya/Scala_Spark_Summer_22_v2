@@ -1,6 +1,9 @@
 package com.github.fyodiya
 
+import com.github.fyodiya.Day17HelloSpark.flightData2015
 import org.apache.spark.sql.SparkSession
+
+import scala.io.StdIn.readLine
 
 object Day17HelloSpark extends App {
   println(s"Testing Scala version: ${util.Properties.versionString}")
@@ -16,9 +19,29 @@ object Day17HelloSpark extends App {
   //create range of numbers 0 to 100
   val alsoRange = spark.range(100).toDF("number")
   //filter into numbers divisible by 10
-  val filteredNumbers = alsoRange.where("number % 10 = 0")
+  val divisibleBy10 = alsoRange.where("number % 10 = 0")
   //show the results
-  filteredNumbers.show()
+  divisibleBy10.show()
+
+  //DataFrame = DataBase
+  //just like a table, except some rows might be stored on different computers
+  //of course, with 1 computer there is nothing where to distribute
+
+  println(s"We have ${divisibleBy10.count()} numbers divisible by 10!")
+
+  val flightData2015 = spark
+    .read
+    .option("inferSchema", "true")
+    .option("header", "true")
+    .csv("src/resources/flight-data/csv/2015-summary.csv")
+
+//  println(flightData2015.take(5).mkString(",")
+  println(flightData2015.sort("count").take(10).mkString(","))
+
+  flightData2015.sort("count").explain()
+
+
+  readLine("Enter anything to stop Spark!")
 
   spark.stop() //or .close() if you want to stop the Spark engine before the program stops running
 }
