@@ -2,7 +2,7 @@ package com.github.fyodiya
 
 import org.apache.spark.sql.SparkSession
 
-object HelloSpark extends App {
+object Day17HelloSpark extends App {
   println(s"Testing Scala version: ${util.Properties.versionString}")
 
   val spark = SparkSession.builder().appName("test").master("local").getOrCreate()
