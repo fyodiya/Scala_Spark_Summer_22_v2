@@ -1,6 +1,6 @@
 package com.github.fyodiya
 
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{SparkSession, functions}
 
 object Day18SparkSQL extends App {
 
@@ -59,10 +59,13 @@ object Day18SparkSQL extends App {
     ORDER BY sum(count) DESC
     """)
 
-  dataSQL2014.show(10)
-
   //show top 10 flights
   dataSQL2014.show(10)
+
+  //two different approaches to achieve the same result:
+  spark.sql("SELECT max(count) from flight_data_2015").show()
+  flightData2015.select(functions.max("count")).show()
+
 
 
 }

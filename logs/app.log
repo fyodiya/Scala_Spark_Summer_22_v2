@@ -54,3 +54,12 @@ java.lang.NullPointerException: null
 2022-07-19 21:14:10,068 WARN o.a.h.u.Shell [main] Did not find winutils.exe: java.io.FileNotFoundException: java.io.FileNotFoundException: HADOOP_HOME and hadoop.home.dir are unset. -see https://wiki.apache.org/hadoop/WindowsProblems
 2022-07-19 21:14:10,094 WARN o.a.h.u.NativeCodeLoader [main] Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
 2022-07-19 21:14:11,586 WARN o.a.s.u.Utils [main] Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+2022-07-19 21:18:31,913 WARN o.a.h.u.Shell [main] Did not find winutils.exe: java.io.FileNotFoundException: java.io.FileNotFoundException: HADOOP_HOME and hadoop.home.dir are unset. -see https://wiki.apache.org/hadoop/WindowsProblems
+2022-07-19 21:18:31,937 WARN o.a.h.u.NativeCodeLoader [main] Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2022-07-19 21:18:33,381 WARN o.a.s.u.Utils [main] Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+2022-07-19 21:19:50,303 WARN o.a.h.u.Shell [main] Did not find winutils.exe: java.io.FileNotFoundException: java.io.FileNotFoundException: HADOOP_HOME and hadoop.home.dir are unset. -see https://wiki.apache.org/hadoop/WindowsProblems
+2022-07-19 21:19:50,326 WARN o.a.h.u.NativeCodeLoader [main] Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2022-07-19 21:19:51,607 WARN o.a.s.u.Utils [main] Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+2022-07-19 21:20:29,416 WARN o.a.h.u.Shell [main] Did not find winutils.exe: java.io.FileNotFoundException: java.io.FileNotFoundException: HADOOP_HOME and hadoop.home.dir are unset. -see https://wiki.apache.org/hadoop/WindowsProblems
+2022-07-19 21:20:29,450 WARN o.a.h.u.NativeCodeLoader [main] Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2022-07-19 21:20:30,820 WARN o.a.s.u.Utils [main] Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
