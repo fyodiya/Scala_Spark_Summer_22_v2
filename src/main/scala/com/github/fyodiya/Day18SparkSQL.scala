@@ -56,6 +56,7 @@ object Day18SparkSQL extends App {
       SELECT DEST_COUNTRY_NAME, count(1)
       FROM flight_data_2014
       GROUP BY DEST_COUNTRY_NAME
+      ORDER BY flight DESC
       """)
 
   //show top 10 flights
