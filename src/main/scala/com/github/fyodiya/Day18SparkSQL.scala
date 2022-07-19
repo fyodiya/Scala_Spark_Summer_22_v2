@@ -48,20 +48,18 @@ object Day18SparkSQL extends App {
     .option("header", "true")
     .csv("src/resources/flight-data/csv/2014-summary.csv")
 
+  //create SQL view
   flightData2014.createTempView("flight_data_2014")
 
-  //create SQL view
-  //ORDER BY flight counts
-  val dataFrameWay2014 = spark.sql("""
+  //order by flight counts
+  val dataSQL2014 = spark.sql("""
       SELECT DEST_COUNTRY_NAME, count(1)
       FROM flight_data_2014
       GROUP BY DEST_COUNTRY_NAME
       """)
 
   //show top 10 flights
-  dataFrameWay2014.show(10)
+  dataSQL2014.show(10)
 
-
-  //you can also show the dataFrameWay as well but we have not looked at that in detail
 
 }

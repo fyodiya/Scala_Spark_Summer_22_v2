@@ -19,3 +19,6 @@
 2022-07-19 20:09:15,185 WARN o.a.h.u.Shell [main] Did not find winutils.exe: java.io.FileNotFoundException: java.io.FileNotFoundException: HADOOP_HOME and hadoop.home.dir are unset. -see https://wiki.apache.org/hadoop/WindowsProblems
 2022-07-19 20:09:15,219 WARN o.a.h.u.NativeCodeLoader [main] Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
 2022-07-19 20:09:16,676 WARN o.a.s.u.Utils [main] Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+2022-07-19 20:21:17,578 WARN o.a.h.u.Shell [main] Did not find winutils.exe: java.io.FileNotFoundException: java.io.FileNotFoundException: HADOOP_HOME and hadoop.home.dir are unset. -see https://wiki.apache.org/hadoop/WindowsProblems
+2022-07-19 20:21:17,604 WARN o.a.h.u.NativeCodeLoader [main] Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2022-07-19 20:21:19,042 WARN o.a.s.u.Utils [main] Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
