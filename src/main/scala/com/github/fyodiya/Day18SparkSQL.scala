@@ -53,11 +53,13 @@ object Day18SparkSQL extends App {
 
   //order by flight counts
   val dataSQL2014 = spark.sql("""
-      SELECT DEST_COUNTRY_NAME, count(1)
-      FROM flight_data_2014
-      GROUP BY DEST_COUNTRY_NAME
-      ORDER BY flight DESC
-      """)
+    SELECT DEST_COUNTRY_NAME, sum(count) as FLIGHTS
+    FROM flight_data_2014
+    GROUP BY DEST_COUNTRY_NAME
+    ORDER BY sum(count) DESC
+    """)
+
+  dataSQL2014.show(10)
 
   //show top 10 flights
   dataSQL2014.show(10)
