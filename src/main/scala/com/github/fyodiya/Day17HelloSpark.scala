@@ -1,6 +1,5 @@
 package com.github.fyodiya
 
-import com.github.fyodiya.Day17HelloSpark.flightData2015
 import org.apache.spark.sql.SparkSession
 
 import scala.io.StdIn.readLine
