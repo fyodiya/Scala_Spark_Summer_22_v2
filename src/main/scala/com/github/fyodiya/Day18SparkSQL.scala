@@ -1,6 +1,15 @@
 package com.github.fyodiya
 
-import org.apache.spark.sql.{SparkSession, functions}
+import org.apache.spark.sql.functions
+import org.apache.spark.sql.functions.{desc, max}
+//import org.apache.spark.sql.functions. //lot of functions you probably do not want to import all of them
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{Encoder, Encoders}
+
+// in Scala
+case class Flight(DEST_COUNTRY_NAME: String,
+                  ORIGIN_COUNTRY_NAME: String,
+                  count: BigInt)
 
 object Day18SparkSQL extends App {
 
@@ -39,7 +48,7 @@ object Day18SparkSQL extends App {
   dataFrameWay.show(10)
 
   //set up logging  log4j2.xml config file
-  //et level to warning for both file and console
+  //set level to "warning" for both the file and console
 
   //open up flight Data from 2014
   val flightData2014 = spark
@@ -66,6 +75,42 @@ object Day18SparkSQL extends App {
   spark.sql("SELECT max(count) from flight_data_2015").show()
   flightData2015.select(functions.max("count")).show()
 
+  val maxSQL = spark.sql("""
+    SELECT DEST_COUNTRY_NAME, sum(count) as destination_total
+    FROM flight_data_2015
+    GROUP BY DEST_COUNTRY_NAME
+    ORDER BY sum(count) DESC
+    """)
+  maxSQL.show()
+
+  //another approach is this:
+//  //FIXME
+//  flightData2015
+//    .groupBy("DEST_COUNTRY_NAME")
+//    .sum("count")
+//    .withColumnRenamed("sum(count)", "destination_total")
+//    .sort(desc("destination_total"))
+//    .toDF()
+//    .write
+//    .format("CSV")
+//    .mode("override")
+////    .option("separator", "\t")
+//    .save("src/resources/flight-data/csv/top_destinations_2015.csv")
+//we can save the results into a file instead of printing them out
+
+
+//  val flightsDF = spark.read
+//  //    .parquet("src/resources/flight-data/parquet/2010-summary.parquet/")
+//
+//  //one of those dark corners of Scala called implicits, which is a bit magical
+//  implicit val enc: Encoder[Flight] = Encoders.product[Flight]
+//  //we needed the above line so the below type conversion works
+//  val flights = flightsDF.as[Flight]
+//  val flightsArray = flights.collect() //now we have local storage of our Flights
+//  //now we can use regular Scala methods
+//  println(s"We have information on ${flightsArray.length} flights")
+//  val sortedFlights = flightsArray.sortBy(_.count)
+//  println(sortedFlights.take(5).mkString("\n"))
 
 
 }
