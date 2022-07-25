@@ -213,3 +213,22 @@ java.lang.NullPointerException: null
 2022-07-25 16:17:17,132 WARN o.a.s.e.ProcfsMetricsGetter [executor-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
 2022-07-25 16:19:58,869 WARN o.a.s.e.ProcfsMetricsGetter [driver-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
 2022-07-25 19:57:13,782 WARN o.a.s.e.ProcfsMetricsGetter [executor-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+2022-07-25 21:12:57,370 ERROR o.a.s.r.n.Inbox [dispatcher-event-loop-0] Ignoring error
+java.util.concurrent.RejectedExecutionException: Task org.apache.spark.executor.Executor$TaskRunner@36bd2284 rejected from java.util.concurrent.ThreadPoolExecutor@191688c2[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0]
+	at java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:2063) ~[?:1.8.0_332]
+	at java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:830) ~[?:1.8.0_332]
+	at java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:1379) ~[?:1.8.0_332]
+	at org.apache.spark.executor.Executor.launchTask(Executor.scala:305) ~[spark-core_2.13-3.3.0.jar:3.3.0]
+	at org.apache.spark.scheduler.local.LocalEndpoint.$anonfun$reviveOffers$1(LocalSchedulerBackend.scala:93) ~[spark-core_2.13-3.3.0.jar:3.3.0]
+	at org.apache.spark.scheduler.local.LocalEndpoint.$anonfun$reviveOffers$1$adapted(LocalSchedulerBackend.scala:91) ~[spark-core_2.13-3.3.0.jar:3.3.0]
+	at scala.collection.immutable.Vector.foreach(Vector.scala:1856) ~[scala-library-2.13.8.jar:?]
+	at org.apache.spark.scheduler.local.LocalEndpoint.reviveOffers(LocalSchedulerBackend.scala:91) ~[spark-core_2.13-3.3.0.jar:3.3.0]
+	at org.apache.spark.scheduler.local.LocalEndpoint$$anonfun$receive$1.applyOrElse(LocalSchedulerBackend.scala:68) ~[spark-core_2.13-3.3.0.jar:3.3.0]
+	at org.apache.spark.rpc.netty.Inbox.$anonfun$process$1(Inbox.scala:115) ~[spark-core_2.13-3.3.0.jar:3.3.0]
+	at org.apache.spark.rpc.netty.Inbox.safelyCall(Inbox.scala:213) ~[spark-core_2.13-3.3.0.jar:3.3.0]
+	at org.apache.spark.rpc.netty.Inbox.process(Inbox.scala:100) ~[spark-core_2.13-3.3.0.jar:3.3.0]
+	at org.apache.spark.rpc.netty.MessageLoop.org$apache$spark$rpc$netty$MessageLoop$$receiveLoop(MessageLoop.scala:75) ~[spark-core_2.13-3.3.0.jar:3.3.0]
+	at org.apache.spark.rpc.netty.MessageLoop$$anon$1.run(MessageLoop.scala:41) ~[spark-core_2.13-3.3.0.jar:3.3.0]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) ~[?:1.8.0_332]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) ~[?:1.8.0_332]
+	at java.lang.Thread.run(Thread.java:750) ~[?:1.8.0_332]
