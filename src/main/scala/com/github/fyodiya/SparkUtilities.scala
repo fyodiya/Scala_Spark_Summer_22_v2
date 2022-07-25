@@ -9,13 +9,14 @@ object SparkUtilities {
    * @param appName name of our Spark instance
    * @param partitionCount by default is 5
    * @param verbose prints info for debugging purposes
+   * @param master by default it is "local", master URL to connect to
    * @return sparkSession
    */
-  def getOrCreateSpark(appName: String, partitionCount: Int = 5, verbose:Boolean = true): SparkSession = {
+  def getOrCreateSpark(appName: String, partitionCount: Int = 5, master:String = "local",  verbose:Boolean = true): SparkSession = {
     if (verbose) println(s"$appName with Scala version: ${util.Properties.versionNumberString}")
     val sparkSession = SparkSession.builder().appName(appName).master("local").getOrCreate()
     sparkSession.conf.set("spark.sql.shuffle.partitions", partitionCount)
-    if (verbose) println(s"Session started on Spark version ${util.Properties.versionNumberString} with ${partitionCount} partitions")
+    if (verbose) println(s"Session started on Spark version: ${util.Properties.versionNumberString}, with ${partitionCount} partitions.")
     sparkSession
   }
 
