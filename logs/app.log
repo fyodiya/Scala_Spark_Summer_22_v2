@@ -202,3 +202,14 @@ java.lang.NullPointerException: null
 2022-07-22 11:34:44,249 WARN o.a.h.u.NativeCodeLoader [main] Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
 2022-07-22 11:49:29,108 WARN o.a.h.u.Shell [main] Did not find winutils.exe: java.io.FileNotFoundException: java.io.FileNotFoundException: Hadoop home directory C:\Users\eafjo\Documents\GitHub\winutils\hadoop-3.3.1%HADOOP_HOME%\bin does not exist -see https://wiki.apache.org/hadoop/WindowsProblems
 2022-07-22 11:49:29,140 WARN o.a.h.u.NativeCodeLoader [main] Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2022-07-23 17:51:48,535 WARN o.a.h.u.Shell [main] Did not find winutils.exe: java.io.FileNotFoundException: java.io.FileNotFoundException: HADOOP_HOME and hadoop.home.dir are unset. -see https://wiki.apache.org/hadoop/WindowsProblems
+2022-07-23 17:51:48,592 WARN o.a.h.u.NativeCodeLoader [main] Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2022-07-24 17:48:04,479 WARN o.a.h.u.Shell [main] Did not find winutils.exe: java.io.FileNotFoundException: java.io.FileNotFoundException: HADOOP_HOME and hadoop.home.dir are unset. -see https://wiki.apache.org/hadoop/WindowsProblems
+2022-07-24 17:48:04,510 WARN o.a.h.u.NativeCodeLoader [main] Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2022-07-24 17:55:54,500 WARN o.a.h.u.Shell [main] Did not find winutils.exe: java.io.FileNotFoundException: java.io.FileNotFoundException: HADOOP_HOME and hadoop.home.dir are unset. -see https://wiki.apache.org/hadoop/WindowsProblems
+2022-07-24 17:55:54,524 WARN o.a.h.u.NativeCodeLoader [main] Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2022-07-24 18:06:22,781 WARN o.a.s.e.ProcfsMetricsGetter [executor-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+2022-07-25 15:45:29,198 WARN o.a.s.e.ProcfsMetricsGetter [executor-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+2022-07-25 16:17:17,132 WARN o.a.s.e.ProcfsMetricsGetter [executor-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+2022-07-25 16:19:58,869 WARN o.a.s.e.ProcfsMetricsGetter [driver-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+2022-07-25 19:57:13,782 WARN o.a.s.e.ProcfsMetricsGetter [executor-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
