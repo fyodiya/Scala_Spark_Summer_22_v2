@@ -16,12 +16,12 @@ object Day20Exercise extends App {
   range1To31.show(31)
 
   //save it as a numbers.csv
-  val ourNumbers = spark.range(31).toDF().collect()
+  val ourNumbers = spark.range(32).toDF().collect()
   val arrRow = spark.range(31).toDF(colNames = "JulyNumbers").collect()
 
 
   //create a new dataframe with numbers from 100 to 1300
-  val range100To1300 = spark.range(100, 1300).toDF("Numbers")
+  val range100To1300 = spark.range(100, 1301).toDF("Numbers")
   //show last 5 numbers
   range100To1300.tail(5).foreach(println)
 

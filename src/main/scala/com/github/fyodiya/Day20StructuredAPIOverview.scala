@@ -46,6 +46,4 @@ object Day20StructuredAPIOverview extends App {
   println("Tail of our array:")
   println(arrRow.last)
 
-
-
 }
