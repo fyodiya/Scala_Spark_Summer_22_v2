@@ -74,8 +74,4 @@ object Day20BasicStructuredOperations extends App {
   //coalesce(1) was needed because otherwise Spark would have saved our data in 5 different csv files
   //(because we have 5 partitions from our configuration)
 
-  //TRANSFORMATION
-
-
-
 }
