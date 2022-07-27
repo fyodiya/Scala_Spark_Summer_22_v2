@@ -122,34 +122,31 @@ object Day21RowsAndDFTransformations extends App {
     .show(2)
 
 
-  //create 3 Rows with the following data formats, string - holding food name, int - for holding quantity, long for holding price
-  //also boolean for holding isIt Vegan or not - so 4 data cells in each row
-  // you will need to manually create a Schema - column names thus will be food, qty, price, isVegan
-  // you  might need to import an extra type or two import org.apache.spark.sql.types.{StructField, StructType, StringType, LongType }
+  val foodSchema = new StructType(Array(
+    new StructField("food", StringType, false), //so true refers to this field/column being nullable namely could have null
+    new StructField("qty", IntegerType, false),
+    new StructField("price", DoubleType, false),
+    new StructField("isVegan", BooleanType, true)))
+  //so names have to be present it is not nullable - ie required
+
   //create a dataFrame called foodFrame which will hold those Rows
-  //Use Select or/an SQL syntax to select and show only name and qty
 
-  //so 3 Rows of food each Row will have 4 entries (columns) so original data could be something like Chocolate, 3, 2.49, false
-  //in Schema , name, qty, price are required (not nullable) while isVegan could be null
-
-  val newManualSchema = new StructType(Array(
-    StructField("food_name", StringType, true),
-    StructField("quantity", IntegerType, true),
-    StructField("vegan", BooleanType , true),
-    StructField("price", DoubleType, true)))
-
-  val newRows = Seq(
-    Row("Chocolate", 2, true, 2.19),
-    Row("Tomatoes", 14, true, 2.49),
-    Row("Grapes", 358, true, 3.99)
+  val foodRows = Seq(
+    Row("Cottage cheese", 1, 3.49, false), //we need to specify 1L because 1 by itself is an integer
+    Row("Sourdough bread", 2, 4.99, true),
+    Row("Dumplings", 12, 3.89, null),
+    Row("Smoked salmon", 1, 5.69, false)
   )
 
-  val newRDD = spark.sparkContext.parallelize(newRows)
-  val foodFrame = spark.createDataFrame(newRDD, newManualSchema)
+  val foodRDD = spark.sparkContext.parallelize(foodRows) //you could add multiple partitions(numSlices) here which is silly when you only have 4 rows o data
+  val foodFrame = spark.createDataFrame(foodRDD, foodSchema)
 
-  val foodDF = foodFrame.select("food_name", "quantity")
-  foodDF.show()
+  //Use Select or/an SQL syntax to select and show only name and qty
 
+  foodFrame.select(col("food"),
+                  col("qty")).show()
 
+  //so 3 Rows of food each Row has 4 entries (columns) so original data could be something like Chocolate, 3, 2.49, false
+  //in Schema, name, qty, price are required (not nullable) while isVegan could be null
 
 }
