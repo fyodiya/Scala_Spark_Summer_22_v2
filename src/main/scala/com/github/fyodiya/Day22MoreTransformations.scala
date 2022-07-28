@@ -111,31 +111,20 @@ object Day22MoreTransformations extends App {
   val dataFrames = df.randomSplit(Array(0.25, 0.75), seed)
 
   for ((dFrame, i) <- dataFrames.zipWithIndex) { //we could have used df or anything else instead of dFrame
-    println(s"DataFrame No. $i has ${dFrame.count} rows")
+    println(s"DataFrame No.$i has ${dFrame.count} rows.")
   }
 
   def getDataFrameStats(dFrames:Array[Dataset[Row]], df:DataFrame): Array[Long] = {
     dFrames.map(d => d.count() * 100 / df.count())
   }
 
-  val dPercentages= getDataFrameStats(dataFrames, df)
+  val dPercentages = getDataFrameStats(dataFrames, df)
   println("DataFrame percentages")
   dPercentages.foreach(println)
 
   //so now the proportion should be roughly 2/5 to the first dataframe and 3/5 to the 2nd
-  //so randomSplit will normalize 2,3 to 0.4, 0.6
+  //so randomSplit will normalize 2, 3 to 0.4, 0.6
   val dFrames23split = df.randomSplit(Array(2, 3), seed)
   getDataFrameStats(dFrames23split, df).foreach(println)
-
-  //TODO open up 2014-summary.json file
-
-  //TODO Task 1 - Filter only flights FROM US thathappened more than 10 times
-
-  //TODO Task 2 - I want a random sample from all 2014 of roughly 30 percent, you can use a fixed seed
-  //subtask I want to see the actual row count
-
-  //TODO Task 3 - I want a split of full 2014 dataframe into 3 Dataframes with the following proportions 2,9, 5
-  //subtask I want to see the row count for these dataframes and percentages
-
 
 }
