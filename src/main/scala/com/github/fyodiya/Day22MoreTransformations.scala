@@ -1,9 +1,7 @@
 package com.github.fyodiya
 
 import org.apache.spark.sql.{DataFrame, Dataset, Row}
-import com.github.fyodiya.Day21SelectExpressionsAndColumns.dfWithLongColName
-import org.apache.spark.sql.functions.col
-
+import org.apache.spark.sql.functions.{asc, col, desc, expr}
 import scala.util.Random
 
 object Day22MoreTransformations extends App {
@@ -126,5 +124,66 @@ object Day22MoreTransformations extends App {
   //so randomSplit will normalize 2, 3 to 0.4, 0.6
   val dFrames23split = df.randomSplit(Array(2, 3), seed)
   getDataFrameStats(dFrames23split, df).foreach(println)
+
+  //DataFrames are immutable. This means users cannot
+  //append to DataFrames because that would be changing it. To append to a DataFrame, you must
+  //union the original DataFrame along with the new DataFrame. This just concatenates the two
+  //DataFrames. To union two DataFrames, you must be sure that they have the same schema and
+  //number of columns; otherwise, the union will fail.
+
+  //Unions are currently performed based on location, not on the schema. This means that columns will
+  //not automatically line up the way you think they might.
+
+  val unionFirstTwo = dataFrames.head.union(dataFrames(1))
+  unionFirstTwo.show(5)
+  println(s"The size of the union of 2 dataframes is: ${unionFirstTwo.count}")
+
+  val schema = df.schema //we copied an original dataframe schema
+  val newRows = Seq(
+    Row("New Country", "Other Country", 5L),
+    Row("New Country 2", "Other Country 3", 1L)
+  )
+  val parallelizedRows = spark.sparkContext.parallelize(newRows)
+  val newDF = spark.createDataFrame(parallelizedRows, schema)
+  df.printSchema()
+
+  df.union(newDF)
+    .where("count = 1")
+    .where("ORIGIN_COUNTRY_NAME != 'United States'")
+    .show() // get all of them and we'll see our new rows at the end
+
+  //Sorting Rows
+  //When we sort the values in a DataFrame, we always want to sort with either the largest or
+  //smallest values at the top of a DataFrame. There are two equivalent operations to do this sort
+  //and orderBy that work the exact same way. They accept both column expressions and strings as
+  //well as multiple columns.
+  // The default is to sort in ascending order
+
+  //different approaches to sorting
+  df.sort("count").show(5)
+  //when there are 2 columns, the 2nd one is the tie-breaker
+  df.sort(desc("count")).show(5)
+  //since DESC counts are different straight from the beginning,  only the tiny counts (1, 2, 3 would have tiebreakes
+  //you'd expect all 3 of these to be exactly the same
+
+  df.orderBy("count", "DEST_COUNTRY_NAME").show(5)
+  df.orderBy(col("count"), col("DEST_COUNTRY_NAME")).show(5) //better to skip this one
+
+  //To more explicitly specify sort direction, you need to use the asc and desc functions if operating
+  //on a column. These allow you to specify the order in which a given column should be sorted:
+  df.orderBy(expr("count desc")).show(2)
+  df.orderBy(desc("count"), asc("DEST_COUNTRY_NAME")).show(2)
+  //you can keep adding more tiebreakers if the query/data is complicated
+
+//An advanced tip is to use asc_nulls_first, desc_nulls_first, asc_nulls_last, or
+  //desc_nulls_last to specify where you would like your null values to appear in an ordered
+  //DataFrame.
+  //For optimization purposes, it’s sometimes advisable to sort within each partition before another
+  //set of transformations. You can use the sortWithinPartitions method to do this:
+
+    //  spark.read.format("json").load("/data/flight-data/json/2015-summary.json")
+    //.sortWithinPartitions("count")
+
+
 
 }

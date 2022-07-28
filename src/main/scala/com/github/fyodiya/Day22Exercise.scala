@@ -35,7 +35,11 @@ object Day22Exercise extends App {
   val withReplacement = false //we don't place our samples back into the sample pool
   val fraction = 0.3
 
-  val sample = df.sample(withReplacement, fraction, seed)
+  df.cache() //we will try caching the values
+  val dfRepartition = df.repartition(1, col("count")) //single partition DF
+
+//  val sample = df.sample(withReplacement, fraction, seed)
+  val sample = dfRepartition.sample(withReplacement, fraction, seed)
   sample.show()
   //subtask I want to see the actual row count
   println(s"We got ${sample.count()} samples")
@@ -54,5 +58,7 @@ object Day22Exercise extends App {
   for ((dFrame, i) <- dataFrames.zipWithIndex) {
     println(s"$i dataframe consists of ${dFrame.count} rows")
   }
+
+
 
 }
