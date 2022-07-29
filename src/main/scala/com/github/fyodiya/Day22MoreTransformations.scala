@@ -2,8 +2,6 @@ package com.github.fyodiya
 
 import org.apache.spark.sql.{DataFrame, Dataset, Row}
 import org.apache.spark.sql.functions.{asc, col, desc, expr}
-import org.sparkproject.dmg.pmml.False
-
 import scala.util.Random
 
 object Day22MoreTransformations extends App {

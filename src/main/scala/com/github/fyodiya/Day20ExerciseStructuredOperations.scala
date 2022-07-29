@@ -2,7 +2,7 @@ package com.github.fyodiya
 
 import org.apache.spark.sql.SparkSession
 
-object Day20Exercise extends App {
+object Day20ExerciseStructuredOperations extends App {
 
   println(s"Scala version: ${util.Properties.versionNumberString}")
   val spark = SparkSession.builder().appName("tourDeSpark").master("local").getOrCreate()
