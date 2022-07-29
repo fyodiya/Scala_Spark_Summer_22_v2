@@ -20,6 +20,4 @@ object SparkUtilities {
     sparkSession
   }
 
-
-
 }

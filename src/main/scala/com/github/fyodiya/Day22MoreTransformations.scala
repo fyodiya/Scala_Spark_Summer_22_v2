@@ -2,6 +2,8 @@ package com.github.fyodiya
 
 import org.apache.spark.sql.{DataFrame, Dataset, Row}
 import org.apache.spark.sql.functions.{asc, col, desc, expr}
+import org.sparkproject.dmg.pmml.False
+
 import scala.util.Random
 
 object Day22MoreTransformations extends App {
@@ -175,15 +177,63 @@ object Day22MoreTransformations extends App {
   df.orderBy(desc("count"), asc("DEST_COUNTRY_NAME")).show(2)
   //you can keep adding more tiebreakers if the query/data is complicated
 
-//An advanced tip is to use asc_nulls_first, desc_nulls_first, asc_nulls_last, or
-  //desc_nulls_last to specify where you would like your null values to appear in an ordered
-  //DataFrame.
-  //For optimization purposes, it’s sometimes advisable to sort within each partition before another
-  //set of transformations. You can use the sortWithinPartitions method to do this:
+//Day 23, finishing up on limit and collect & coalesce
 
-    //  spark.read.format("json").load("/data/flight-data/json/2015-summary.json")
-    //.sortWithinPartitions("count")
+  //Limit
+  //Oftentimes, you might want to restrict what you extract from a DataFrame; for example, you
+  //might want just the top ten of some DataFrame. You can do this by using the limit method:
+  df.limit(5).show() //only 5 results will be shown
 
+  //remember, that after creating a temporary view operations can be performed by using SQL syntax
+  df.createTempView("dfTable")
+  spark.sql("SELECT * FROM dfTable ORDER BY count DESC LIMIT 3").show(5) //only 3 result will be shown!
 
+  //Repartition and Coalesce
+  //Another important optimization opportunity is to partition the data according to some frequently
+  //filtered columns, which control the physical layout of data across the cluster including the
+  //partitioning scheme and the number of partitions.
+  //Repartition will incur a full shuffle of the data, regardless of whether one is necessary. This
+  //means that you should typically only repartition when the future number of partitions is greater
+  //than your current number of partitions or when you are looking to partition by a set of columns:
+
+  println(s"We have partition count: ${df.rdd.getNumPartitions}")
+
+  //If you know that you’re going to be filtering by a certain column often, it can be worth
+  //repartitioning based on that column:
+  val newDFSinglePart = df.repartition(5, col("DEST_COUNTRY_NAME"))
+  println(s"We have partition count: ${df.rdd.getNumPartitions}")
+  println(s"We have partition count: ${newDFSinglePart.rdd.getNumPartitions}")
+
+  //You can optionally specify the number of partitions you would like, too:
+  df.repartition(5, col("DEST_COUNTRY_NAME"))
+
+  //Coalesce, on the other hand, will not incur a full shuffle and will try to combine partitions. This
+  //operation will shuffle your data into five partitions based on the destination country name, and
+  //then coalesce them (without a full shuffle):
+  val dfCoalesced2 = df.repartition(10, col("DEST_COUNTRY_NAME")).coalesce(2)
+  println(s"We have partition count: ${df.rdd.getNumPartitions}") //should be still 1
+  println(s"We have partition count: ${dfCoalesced2.rdd.getNumPartitions}") //should be 2
+  //again with a single machine there is not much point in partitions this is meant for actual deployments over multiple machines
+
+//Collecting Rows to the Driver
+  //As discussed in previous chapters, Spark maintains the state of the cluster in the driver. There are
+  //times when you’ll want to collect some of your data to the driver in order to manipulate it on
+  //your local machine.
+  //Thus far, we did not explicitly define this operation. However, we used several different methods
+  //for doing so that are effectively all the same. collect gets all data from the entire DataFrame,
+  //take selects the first N rows, and show prints out a number of rows nicely.
+  val collectDF = df.limit(10) //we don;t have the data locally, this is just an instruction
+  val arrRow5 = collectDF.take(5) // take works with an Integer count
+  collectDF.show() // this prints it out nicely
+  collectDF.show(5, false) //keeps long strings inside cells for show
+
+  val arrRow10 = collectDF.collect() //Returns an array that contains all rows in this Dataset.
+  // Running collect requires moving all the data into the application's driver process,
+  // and  by doing so on a very large dataset it can crash the driver process with OutOfMemoryError.
+
+  //now that we have data locally we can do whatever we want using standard Scala code
+  arrRow5.foreach(println)
+  println("All 10")
+  arrRow10.foreach(println)
 
 }
