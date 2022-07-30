@@ -22,7 +22,7 @@ object Day23ExerciseDifferentDataTypes extends App {
 
   //get all purchases that have been made from Finland
   println("Purchases that have been made from Finland:")
-  df.where(col("Country") =!= "Finland").show()
+  df.where(col("Country") === "Finland").show()
 
   //sort by Unit Price and LIMIT 20
   println("20 purchases, sorted by price of the unit:")
