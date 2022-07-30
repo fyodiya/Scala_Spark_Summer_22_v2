@@ -31,8 +31,7 @@ object Day23ExerciseDifferentDataTypes extends App {
   //collect results into an Array of Rows
   //print these 20 Rows
   val arrayOfRows = df.sort("UnitPrice").limit(20).collect()
-
-  println(arrayOfRows)
+  arrayOfRows.foreach(println)
 
   //You can use either SQL or Spark or mis of syntax
 
