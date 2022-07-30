@@ -23,7 +23,7 @@ object Day23DifferentDataTypes extends App {
     .option("inferSchema", "true")
     .load(filePath)
 
-  //useful to start our operations with seeing schema and having temp View ready for plain SQL commands
+  //useful to start operations after seeing schema and creating a temp View ready for plain SQL commands
   df.printSchema() //notice that everything is nullable, because some data might be missing
   df.createOrReplaceTempView("dfTable") //we could have multiple Temp Views in a single app
 
@@ -53,22 +53,22 @@ object Day23DifferentDataTypes extends App {
     .select("InvoiceNo", "Description")
     .show(5, false)
 
-
   //Another option —and, probably, the cleanest— is to specify the predicate as an expression in a
   //string. This is valid for Python or Scala. Note that this also gives you access to another way of
   //expressing “does not equal”
   df.where("InvoiceNo = 536365")
     .show(5, false)
 
-  //lastly, we can use regular SQL again
-  spark.sql("SELECT * FROM dfTable WHERE InvoiceNo = 536365").show(5,false)
+  //lastly, we can use regular SQL syntax
+  spark.sql("SELECT * FROM dfTable WHERE InvoiceNo = 536365")
+    .show(5,false)
 
-  //you can mix and match sql and Spark API
+  //you can mix and match SQL and Spark API
   spark.sql("SELECT * FROM dfTable WHERE InvoiceNo = 536365")
     .select("InvoiceNo", "Description")
     .show(3, false)
 
-  //same as previous mix of sql and spark
+  //same as the previous mix of SQL and Spark API
   spark.sql("SELECT InvoiceNo,Description FROM dfTable WHERE InvoiceNo = 536365")
     .show(3, false)
 

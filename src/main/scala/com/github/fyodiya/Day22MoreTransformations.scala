@@ -103,7 +103,7 @@ object Day22MoreTransformations extends App {
   dfSample.show(5)
   println(s"We got ${dfSample.count()} samples.")
 
-  // in Scala
+
   //we get Array of Dataset[Row] which is the same as Array[DataFrame]
   //splits 25 percent and 75 percent roughly, again - not exact fractions!
   val dataFrames = df.randomSplit(Array(0.25, 0.75), seed)
