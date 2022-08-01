@@ -88,7 +88,8 @@ object Day24SparkAndStrings extends App {
   //Let’s explore how to use the regexp_replace function to replace substitute color names in our
   //description column:
 
-  //prepping regex in Scala - could do it by hand of course by writing up full regex
+  //prepping regex in Scala
+  //we could do it by hand, of course, by writing the full regex
   val simpleColors = Seq("black", "white", "red", "green", "blue")
   val regexString = simpleColors.map(_.toUpperCase).mkString("|")
   println(regexString) //"BLACK|WHITE|RED|GREEN|BLUE"
@@ -106,14 +107,5 @@ object Day24SparkAndStrings extends App {
       |FROM dfTable
       |""".stripMargin)
     .show(5, truncate = false)
-
-  //TODO open up March 1st, of 2011 CSV
-  //Select Capitalized Description Column
-  //Select Padded country column with _ on both sides with 30 characters for country name total allowed
-  //ideally there would be even number of _______LATVIA__________ (30 total)
-  //select Description column again with all occurrences of metal or wood replaced with material
-  //so this description white metal lantern -> white material lantern
-  //then show top 10 results of these 3 columns
-
 
 }
