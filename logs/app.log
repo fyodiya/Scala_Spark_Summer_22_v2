@@ -681,3 +681,4 @@ java.io.IOException: Failed to delete: C:\Users\eafjo\AppData\Local\Temp\blockmg
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) ~[?:1.8.0_332]
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) ~[?:1.8.0_332]
 	at java.lang.Thread.run(Thread.java:750) ~[?:1.8.0_332]
+2022-08-01 21:28:28,821 WARN o.a.s.e.ProcfsMetricsGetter [executor-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped

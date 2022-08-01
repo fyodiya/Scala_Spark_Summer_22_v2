@@ -2,7 +2,7 @@ package com.github.fyodiya
 
 import com.github.fyodiya.SparkUtilities.{getOrCreateSpark, readCSVWithView}
 import org.apache.spark.sql.functions
-import org.apache.spark.sql.functions.{col, initcap, lit, lower, lpad, ltrim, regexp_replace, rpad, rtrim, upper}
+import org.apache.spark.sql.functions.{col, initcap, lit, lower, lpad, ltrim, regexp_extract, regexp_replace, rpad, rtrim, translate, upper}
 
 object Day24SparkAndStrings extends App {
 
@@ -107,5 +107,38 @@ object Day24SparkAndStrings extends App {
       |FROM dfTable
       |""".stripMargin)
     .show(5, truncate = false)
+
+  //Another task might be to replace given characters with other characters. Building this as a
+  //regular expression could be tedious, so Spark also provides the translate function to replace these
+  //values. This is done at the character level and will replace all instances of a character with the
+  //indexed character in the replacement string:
+
+  //basically, we create a dictionary (actually - a string of values)
+  //which to be replaced by matching character in another string
+
+  //no need for LEET to 1337
+  //because LET to 137 does the same
+  //L -> 1
+  //E -> 3
+  //I -> 1
+  //T -> 7
+  df.select(translate(col("Description"), "LEIT", "1317"), col("Description"))
+    .show(2)
+
+
+  //order of these replacements isn't important,
+  //only the order of the chars/values to be replaced
+
+  //matchingString and replacementString should have the same length
+
+  //We can also perform something similar, like pulling out the first mentioned color:
+  val regexColors = simpleColors.map(_.toUpperCase).mkString("(", "|", ")")
+  // the | signifies OR in regular expression syntax
+  df.select(
+    regexp_extract(col("Description"), regexColors, 1).alias("color_clean"),
+    col("Description")
+    .where("CHAR_LENGTH"(color_clean)>0)).show(10)
+//TODO resolve this
+
 
 }
