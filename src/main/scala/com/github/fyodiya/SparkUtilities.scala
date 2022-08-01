@@ -44,7 +44,7 @@ object SparkUtilities {
       .load(filePath)
     //if you pass only whitespace or nothing to view we will not create it
     //if viewName is NOT blank
-    if (viewName.isEmpty) {
+    if (!viewName.isEmpty) {
       df.createOrReplaceTempView(viewName)
       println(s"Created Temporary View for SQL queries called: $viewName")
     }

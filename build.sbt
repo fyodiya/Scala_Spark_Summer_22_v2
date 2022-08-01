@@ -4,7 +4,7 @@ ThisBuild / scalaVersion := "2.13.8"
 
 lazy val root = (project in file("."))
   .settings(
-    name := "work with Spark"
+    name := "Scala_Spark_Summer_22"
   )
 
 // https://mvnrepository.com/artifact/org.apache.spark/spark-core

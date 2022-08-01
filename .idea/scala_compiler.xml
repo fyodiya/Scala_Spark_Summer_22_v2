@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ScalaCompilerConfiguration">
-    <profile name="sbt 1" modules="work with Spark" />
+    <profile name="sbt 1" modules="Scala_Spark_Summer_22,work with Spark" />
   </component>
 </project>
