@@ -1,7 +1,6 @@
 package com.github.fyodiya
 
-import org.apache.spark.sql.functions.col
-import shapeless.syntax.std.tuple.unitTupleOps
+import org.apache.spark.sql.functions.{col, desc}
 
 object Day23ExerciseDifferentDataTypes extends App {
 
@@ -33,6 +32,19 @@ object Day23ExerciseDifferentDataTypes extends App {
   val arrayOfRows = df.sort("UnitPrice").limit(20).collect()
   arrayOfRows.foreach(println)
 
-  //You can use either SQL or Spark or mis of syntax
+  //You can use either SQL or Spark or mix of both
 
+
+  val dff2011Finland=df.where(col("Country").equalTo("Finland"))
+    .orderBy(desc("UnitPrice"))
+    .limit(20).collect()
+  dff2011Finland.foreach(println)
+
+
+  df.createOrReplaceTempView("marchTable")
+  val finlandRows20 =  spark.sql("SELECT * FROM marchTable WHERE Country = 'Finland' ORDER BY UnitPrice LIMIT 20").collect()
+  for ((row, i) <- finlandRows20.zipWithIndex) {
+    println(s"Row No. ${i+1} -> $row")
+  }
+  finlandRows20.take(5).foreach(println)
 }
