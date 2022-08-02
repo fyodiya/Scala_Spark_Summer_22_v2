@@ -31,13 +31,13 @@ object SparkUtilities {
    * @param printSchema method to display the schema of a dataframe
    * @return temporary view
    */
-  def readCSVWithView(spark: SparkSession,
-                      filePath: String,
-                      source: String = "csv",
-                      viewName: String = "dfTable",
-                      header: Boolean = true,
-                      inferSchema: Boolean = true,
-                      printSchema: Boolean = true): DataFrame = {
+  def readDataWithView(spark: SparkSession,
+                       filePath: String,
+                       source: String = "csv",
+                       viewName: String = "dfTable",
+                       header: Boolean = true,
+                       inferSchema: Boolean = true,
+                       printSchema: Boolean = true): DataFrame = {
     val df = spark.read.format(source)
       .option("header", header.toString) //Spark wants string here since option is generic
       .option("inferSchema", inferSchema.toString) //we let Spark determine schema

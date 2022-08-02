@@ -8,7 +8,7 @@ object Day25DatesAndTimestamps extends App {
   val spark = SparkUtilities.getOrCreateSpark("Date and Timestamp Playground")
   //  spark.conf.set("spark.sql.caseSensitive", true)
   val filePath = "src/resources/retail-data/by-day/2011-12-01.csv"
-  val df = SparkUtilities.readCSVWithView(spark, filePath)
+  val df = SparkUtilities.readDataWithView(spark, filePath)
 
   //Working with Dates and Timestamps
   //Dates and times are a constant challenge in programming languages and databases. It’s always
@@ -78,6 +78,6 @@ object Day25DatesAndTimestamps extends App {
   dateTimeDF.show(5)
   dateTimeDF.printSchema()
 
-  
+
 
 }

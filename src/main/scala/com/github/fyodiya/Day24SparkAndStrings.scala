@@ -9,7 +9,7 @@ object Day24SparkAndStrings extends App {
   val spark = SparkUtilities.getOrCreateSpark("String Fun")
   //  spark.conf.set("spark.sql.caseSensitive", true)
   val filePath = "src/resources/retail-data/by-day/2011-12-01.csv"
-  val df = SparkUtilities.readCSVWithView(spark, filePath)
+  val df = SparkUtilities.readDataWithView(spark, filePath)
 
   //String manipulation shows up in nearly every data flow, and it’s worth explaining what you can
   //do with strings. You might be manipulating log files performing regular expression extraction or

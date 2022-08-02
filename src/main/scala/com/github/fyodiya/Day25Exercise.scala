@@ -1,5 +1,6 @@
 package com.github.fyodiya
 
+import org.apache.spark.sql.catalyst.ScalaReflection.universe.show
 import org.apache.spark.sql.functions.{col, current_date, current_timestamp, datediff, lit, months_between, to_date}
 
 object Day25Exercise extends App {
@@ -9,7 +10,7 @@ object Day25Exercise extends App {
 
   //open up March 1st, of 2011 CSV
   val filePath = "src/resources/retail-data/by-day/2011-03-01.csv"
-  val df = SparkUtilities.readCSVWithView(spark, filePath)
+  val df = SparkUtilities.readDataWithView(spark, filePath)
 
   //Add new column with current date
   val dateDF = spark.range(10)
@@ -23,24 +24,36 @@ object Day25Exercise extends App {
   timeStampDF.printSchema()
 
   //add new column which contains days passed since InvoiceDate (here it is March 1, 2011 but it could vary)
-  dateDF.select((col("Description"), col("InvoiceDate"))
-    to_date(lit("2011-03-01")).alias("startDate")
+  dateDF.select(
+    to_date(lit("2011-03-01")).alias("startDate"),
     to_date(lit("2022-08-02")).alias("endDate"))
     .withColumn("dayDifference", datediff(col("endDate"), col("startDate")))
-    .show(10, false)
+  .show(10, false)
 
   //add new column with months passed since InvoiceDate
-  dateDF.select(col("Description"), col("InvoiceDate"))
-    to_date(lit("2011-03-01")).alias("start")
-    to_date(lit("2022-08-02")).alias("end")
+  dateDF.select(
+    to_date(lit("2011-03-01")).alias("start"),
+    to_date(lit("2022-08-02")).alias("end"))
       .withColumn("monthDifference", datediff(col("endDate"), col("startDate")))
-    .show(10, false)
+    .show(10, truncate = false)
 
   //altogether
   df.withColumn("Current date", current_date())
     .withColumn("Current time", current_timestamp())
     .withColumn("Day difference", datediff(col("Current date"), col("InvoiceDate")))
     .withColumn("Month difference", months_between(col("Current date"), col("InvoiceDate")))
-    .show(2, false)
+    .show(2, truncate = false)
+
+  //in SQL
+  spark.sql(
+    """
+      |SELECT *,
+      |current_date,
+      |current_timestamp,
+      |datediff(current_date, InvoiceDate) as day_difference,
+      |months_between(current_date, InvoiceDate) as month_difference
+      |FROM dfTable
+      |""".stripMargin)
+    .show(3, truncate = false)
 
 }

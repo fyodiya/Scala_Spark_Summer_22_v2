@@ -9,7 +9,7 @@ object Day24Exercise extends App {
 
   //open up March 1st, of 2011 CSV
   val filePath = "src/resources/retail-data/by-day/2011-03-01.csv"
-  val df = SparkUtilities.readCSVWithView(spark, filePath)
+  val df = SparkUtilities.readDataWithView(spark, filePath)
 
   //Select Capitalized Description Column
   df.select(col("Description"),
