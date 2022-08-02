@@ -1,8 +1,7 @@
 package com.github.fyodiya
 
-import com.github.fyodiya.SparkUtilities.{getOrCreateSpark, readCSVWithView}
 import org.apache.spark.sql.functions
-import org.apache.spark.sql.functions.{col, initcap, lit, lower, lpad, ltrim, regexp_extract, regexp_replace, rpad, rtrim, translate, upper}
+import org.apache.spark.sql.functions.{col, expr, initcap, lit, lower, lpad, ltrim, regexp_extract, regexp_replace, rpad, rtrim, translate, upper}
 
 object Day24SparkAndStrings extends App {
 
@@ -132,13 +131,68 @@ object Day24SparkAndStrings extends App {
   //matchingString and replacementString should have the same length
 
   //We can also perform something similar, like pulling out the first mentioned color:
-  val regexColors = simpleColors.map(_.toUpperCase).mkString("(", "|", ")")
-  // the | signifies OR in regular expression syntax
-  df.select(
-    regexp_extract(col("Description"), regexColors, 1).alias("color_clean"),
-    col("Description")
-    .where("CHAR_LENGTH"(color_clean)>0)).show(10)
-//TODO resolve this
+//  val simpleColors = Seq("black", "white", "red", "green", "blue")
+  val regexStringForExtraction = simpleColors.map(_.toUpperCase).mkString("(", "|", ")") //notice the parenthesis
+  //regex101.com
 
+  df.select(
+    regexp_extract(col("Description"), regexStringForExtraction, 1).alias("color_clean"),
+    col("Description"))
+    .where("CHAR_LENGTH(color_clean)>0")
+    .show(10)
+
+  //Sometimes, rather than extracting values, we simply want to check for their existence. We can do
+  //this with the contains method on each column. This will return a Boolean declaring whether the
+  //value you specify is in the column’s string
+
+  //we add a new column (with Boolean, whether there is black or white in description)
+  //then filter by that column
+
+  val containsBlack = col("Description").contains("BLACK")
+  val containsWhite = col("DESCRIPTION").contains("WHITE")
+  df.withColumn("hasSimpleColor", containsBlack.or(containsWhite))
+    .where("hasSimpleColor")
+    .select("Description").show(5, truncate = false)
+
+  //SQL with in string (instr) function
+  spark.sql(
+    """
+      |SELECT Description FROM dfTable
+      |WHERE instr(Description, 'BLACK') >= 1 OR instr(Description, 'WHITE') >= 1
+      |""".stripMargin)
+    .show(5, truncate = false)
+
+  //This is trivial with just two values, but it becomes more complicated when there are values.
+  //Let’s work through this in a more rigorous way and take advantage of Spark’s ability to accept a
+  //dynamic number of arguments. When we convert a list of values into a set of arguments and pass
+  //them into a function, we use a language feature called varargs. Using this feature, we can
+  //effectively unravel an array of arbitrary length and pass it as arguments to a function. This,
+  //coupled with select makes it possible for us to create arbitrary numbers of columns
+  //dynamically:
+
+  val multipleColors = Seq("black", "white", "red", "green", "blue")
+  val selectedColumns = multipleColors.map(color => {
+    col("Description").contains(color.toUpperCase).alias(s"is_$color")
+  }):+expr("*") // could also append this value //we need this to select the rest of the columns
+
+  df.select(selectedColumns:_*). //we unroll our sequence of Columns into multiple individual arguments
+    //because select takes multiple columns one by one NOT an Sequence of columns
+    show(10, truncate = false)
+
+  //so I do not have to give all selected columns
+  df.select(selectedColumns.head, selectedColumns(3), selectedColumns.last, col("Description"))
+    .show(5, truncate = false)
+
+
+  df.select(selectedColumns:_*).where(col("is_white").or(col("is_red")))
+    .select("Description").show(3, truncate = false)
+
+  //  val numbers = Seq(1,5,6,20,5)
+  //will not work on println since it does not strictly speaking support *-parameters
+  //  println("Something", numbers:_*) //unrolls a sequence (Array here) will print a tuple of numbers since it is equivalent TO
+  //  println(1,5,6,20,5)
+
+  //check if your method or function has * at the end of some parameter
+  //then you can unroll some sequence into those parameters
 
 }

@@ -1,6 +1,6 @@
 package com.github.fyodiya
 
-import org.apache.spark.sql.functions.{col, initcap, lit, lpad, regexp_replace, rpad}
+import org.apache.spark.sql.functions.{col, expr, initcap, lpad, regexp_replace, rpad}
 
 object Day24Exercise extends App {
 
@@ -20,8 +20,9 @@ object Day24Exercise extends App {
   df.select(
     col("Description"),
     col("Country"),
-    lpad(rpad(col("Country"), 22, "_"), 30, "_")
-      .as("_Country_")  )
+    //lpad(rpad(col("Country"), 22, "_"), 30, "_"), //doesn't work properly for all countries, number of __ on both sides isn't the same
+    expr("lpad(rpad(Country, 15+int((CHAR_LENGTH(Country))/2), '_'), 30, '_') as ___Country___")
+    .as("_Country_")  )
     .show(5, truncate = false)
   //ideally there would be even number of padding on both sides:
   // _______LATVIA__________ (30 chars in total)
@@ -35,8 +36,8 @@ object Day24Exercise extends App {
       |lpad(rpad(Country, 15+int((CHAR_LENGTH(Country))/2), '_'), 30, '_') as ___Country___
       |FROM dfTable
       |""".stripMargin)
-    .sample(false, 0.3)
-    .show(50000000, false)
+    .sample(withReplacement = false, 0.3)
+    .show(50000000, truncate = false)
 
   //select Description column again with all occurrences of metal or wood replaced with material
   val materials = Seq("metal", "wood")
@@ -45,7 +46,7 @@ object Day24Exercise extends App {
   df.select(
     regexp_replace(col("Description"), regexMaterials, "material").alias("materials clean"),
     col("Description"))
-    .show(10,false)
+    .show(10,truncate = false)
 
 
   //so this description white metal lantern -> white material lantern
