@@ -25,16 +25,16 @@ object Day25Exercise extends App {
 
   //add new column which contains days passed since InvoiceDate (here it is March 1, 2011 but it could vary)
   dateDF.select(
-    to_date(lit("2011-03-01")).alias("startDate"),
-    to_date(lit("2022-08-02")).alias("endDate"))
-    .withColumn("dayDifference", datediff(col("endDate"), col("startDate")))
-  .show(10, false)
+    to_date(lit("2011-03-01")).alias("start"),
+    to_date(lit("2022-08-02")).alias("end"))
+    .withColumn("dayDifference", datediff(col("end"), col("start")))
+  .show(10, truncate = false)
 
   //add new column with months passed since InvoiceDate
   dateDF.select(
     to_date(lit("2011-03-01")).alias("start"),
     to_date(lit("2022-08-02")).alias("end"))
-      .withColumn("monthDifference", datediff(col("endDate"), col("startDate")))
+      .withColumn("monthDifference", datediff(col("end"), col("start")))
     .show(10, truncate = false)
 
   //altogether
