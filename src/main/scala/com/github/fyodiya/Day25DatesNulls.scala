@@ -90,12 +90,13 @@ object Day25DatesNulls extends App {
       |SELECT
       |ifnull(null, 'return_value'),
       |nullif('value', 'value'),
-      |nvl(null, 'return_value'),
-      |nvl2('not_null', 'return_value', "else_value")
+      | nvl(null, 'return_value'),
+      |nvl2('not_null', 'return_value', "else_value"),
+      |nvl2(null, 'return_value', "else_value")
       |FROM dfTable LIMIT 1
-      |""".stripMargin
-  )
-//TODO check differences
+      |""".stripMargin).
+    show(2)
+
 
   //drop
   //The simplest function is drop, which removes rows that contain nulls. The default is to drop any
