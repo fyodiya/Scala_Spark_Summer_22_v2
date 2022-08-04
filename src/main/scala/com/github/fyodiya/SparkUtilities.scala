@@ -38,13 +38,14 @@ object SparkUtilities {
                        header: Boolean = true,
                        inferSchema: Boolean = true,
                        printSchema: Boolean = true): DataFrame = {
+
     val df = spark.read.format(source)
       .option("header", header.toString) //Spark wants string here since option is generic
       .option("inferSchema", inferSchema.toString) //we let Spark determine schema
       .load(filePath)
     //if you pass only whitespace or nothing to view we will not create it
     //if viewName is NOT blank
-    if (!viewName.isEmpty) {
+    if (viewName.nonEmpty) {
       df.createOrReplaceTempView(viewName)
       println(s"Created Temporary View for SQL queries called: $viewName")
     }

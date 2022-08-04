@@ -81,7 +81,7 @@ object Day25DatesNulls extends App {
 
   df.
     withColumn("mynulls", expr("null"))
-    .select(coalesce(col("mynulls"), col("Description"), col(("CustomerId"))))
+    .select(coalesce(col("mynulls"), col("Description"), col("CustomerId")))
       .show()
 
   //in SQL
@@ -148,6 +148,5 @@ object Day25DatesNulls extends App {
   //with replace we can replace no null values as well
   //or we could use withColumn to create a new column with new values
   //few approaches of how to do the same thing
-
 
 }
