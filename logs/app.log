@@ -683,3 +683,7 @@ java.io.IOException: Failed to delete: C:\Users\eafjo\AppData\Local\Temp\blockmg
 	at java.lang.Thread.run(Thread.java:750) ~[?:1.8.0_332]
 2022-08-01 21:28:28,821 WARN o.a.s.e.ProcfsMetricsGetter [executor-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
 2022-08-02 19:20:49,358 WARN o.a.s.u.Utils [main] Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+2022-08-08 12:50:51,480 WARN o.a.s.s.c.u.package [main] Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+2022-08-08 12:50:51,532 WARN o.a.s.e.ProcfsMetricsGetter [driver-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+2022-08-08 12:51:33,163 WARN o.a.s.s.c.u.package [main] Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+2022-08-08 12:51:34,609 WARN o.a.s.e.ProcfsMetricsGetter [executor-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
