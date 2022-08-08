@@ -28,7 +28,4 @@ object Day20ExerciseStructuredOperations extends App {
  DF100To3100.tail(5).foreach(println)
   //range100To1300.reverse.take(5).foreach(println) //another way
 
-
-
-
 }

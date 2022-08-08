@@ -81,14 +81,4 @@ object Day27UserDefinedFunctions extends App {
       |""".stripMargin)
     .show() //printing out everything
 
-  //TODO create a UDF which converts Fahrenheit to Celsius
-  //run it - create a DF with col(tempF) from -40 to 120
-  //register your UDF
-  //show both created views, show columns starting with F 90 (included) and ending with F 110 (included)
-  //use your Uf to create a temp column with the actual temperature
-
-  //double incoming an double as a return
-
-
-
 }

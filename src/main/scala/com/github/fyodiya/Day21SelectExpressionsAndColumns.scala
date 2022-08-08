@@ -1,6 +1,6 @@
 package com.github.fyodiya
 
-import org.apache.spark.sql.functions.{col, expr, lit}
+import org.apache.spark.sql.functions.{expr, lit}
 
 object Day21SelectExpressionsAndColumns extends App {
 

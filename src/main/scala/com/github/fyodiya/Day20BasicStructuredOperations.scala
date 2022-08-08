@@ -28,9 +28,9 @@ object Day20BasicStructuredOperations extends App {
 //enforce a specific schema on a DataFrame.
 
   val myManualSchema = StructType(Array(
-    StructField("DEST_COUNTRY_NAME", StringType, true),
-    StructField("ORIGIN_COUNTRY_NAME", StringType, true),
-    StructField("count", LongType, false,
+    StructField("DEST_COUNTRY_NAME", StringType, nullable = true),
+    StructField("ORIGIN_COUNTRY_NAME", StringType, nullable = true),
+    StructField("count", LongType, nullable = false,
       Metadata.fromJson("{\"hello\":\"world\"}"))
   ))
 

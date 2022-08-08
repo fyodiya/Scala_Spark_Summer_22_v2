@@ -3,7 +3,6 @@ package com.github.fyodiya
 import org.apache.spark.sql.functions
 import org.apache.spark.sql.functions.{approx_count_distinct, countDistinct, first, last}
 
-
 object Aggregations extends App {
 
   println("Chapter 7: Aggregations!")
@@ -119,8 +118,5 @@ object Aggregations extends App {
       |SELECT first(StockCode), last(StockCode) FROM dfTable
       |""".stripMargin)
     .show(10, truncate = false)
-
-  //TODO simple task - find count, distinct count, approximate count (with default rsd)
-  //for customer ID AND unit price columns AND invoice numbers
 
 }
