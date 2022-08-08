@@ -1,8 +1,7 @@
 package com.github.fyodiya
 
-import org.apache.spark.sql.catalyst.dsl.expressions.StringToAttributeConversionHelper
 import org.apache.spark.sql.functions
-import org.apache.spark.sql.functions.{approx_count_distinct, col, countDistinct, udf}
+import org.apache.spark.sql.functions.{col, udf}
 
 object Day27Exercises extends App {
 
@@ -28,9 +27,11 @@ object Day27Exercises extends App {
   tempDF
     .withColumn("Celsius", tempUDF(col("temperature_Fahrenheit")))
     .select("*")
-    .where(("temperature_Fahrenheit >= 90 AND temperature_Fahrenheit <= 110"))
+    .filter("temperature_Fahrenheit >= 90 AND temperature_Fahrenheit <= 110")
     .show()
 
+
+  //df.filter(df("state") === "OH" && df("gender") === "M")
 
 
   //simple task - find count, distinct count, approximate count (with default rsd)
@@ -42,7 +43,6 @@ object Day27Exercises extends App {
   val df = SparkUtilities.readDataWithView(spark, filePath)
 
 //  println(df.count(), "rows")
-
 
   df
     .select("CustomerID", "InvoiceNo", "UnitPrice")
