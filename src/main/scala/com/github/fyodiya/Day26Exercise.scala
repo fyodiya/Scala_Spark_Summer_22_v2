@@ -1,6 +1,6 @@
 package com.github.fyodiya
 
-import org.apache.spark.sql.functions.{asc, col, desc, expr, size, split, struct}
+import org.apache.spark.sql.functions._
 
 object Day26Exercise extends App {
 
