@@ -1,7 +1,7 @@
 package com.github.fyodiya
 
 import org.apache.spark.sql.functions
-import org.apache.spark.sql.functions.{col, udf}
+import org.apache.spark.sql.functions.{approx_count_distinct, col, countDistinct, udf}
 
 object Day27Exercises extends App {
 
@@ -20,18 +20,19 @@ object Day27Exercises extends App {
 //  tempDF.show()
 
   def fahrenheitToCelsius(tempF: Double):Double = ((tempF - 32) * 5 / 9).round
+  //rounding doesn't work here
   val tempUDF = udf(fahrenheitToCelsius(_:Double):Double)
 
   spark.udf.register("temperatures", fahrenheitToCelsius(_:Double): Double)
 
   tempDF
-    .withColumn("Celsius", tempUDF(col("temperature_Fahrenheit")))
+    .withColumn("temperature_Celsius", tempUDF(col("temperature_Fahrenheit")))
     .select("*")
-    .filter("temperature_Fahrenheit >= 90 AND temperature_Fahrenheit <= 110")
+    .where(col("temperature_Fahrenheit") >= 90 && col("temperature_Fahrenheit") <= 110)
+//    .filter("temperature_Fahrenheit >= 90 AND temperature_Fahrenheit <= 110")
     .show()
 
 
-  //df.filter(df("state") === "OH" && df("gender") === "M")
 
 
   //simple task - find count, distinct count, approximate count (with default rsd)
@@ -57,6 +58,48 @@ object Day27Exercises extends App {
   df
     .select("CustomerID", "InvoiceNo", "UnitPrice")
     .select(functions.approx_count_distinct("CustomerID"))
+    .show()
+
+
+  df.select(functions.count("InvoiceNo"),
+    functions.count("CustomerID"),
+    functions.count("UnitPrice"))
+    .show()
+
+  df.select(countDistinct("InvoiceNo"),
+    countDistinct("CustomerID"),
+    countDistinct("UnitPrice"))
+    .show()
+
+  df.select(approx_count_distinct("InvoiceNo"),
+    approx_count_distinct("CustomerID"),
+    approx_count_distinct("UnitPrice"))
+    .show()
+
+  //in SQL
+  spark.sql(
+    """
+      |SELECT count(InvoiceNo),
+      |count(CustomerID),
+      |count(UnitPrice)
+      |FROM dfTable
+      |""".stripMargin)
+    .show()
+  spark.sql(
+    """
+      |SELECT count(distinct(InvoiceNo)),
+      |count(distinct(CustomerID)),
+      |count(distinct(UnitPrice))
+      |FROM dfTable
+      |""".stripMargin)
+    .show()
+  spark.sql(
+    """
+      |SELECT approx_count_distinct(InvoiceNo),
+      |approx_count_distinct(CustomerID),
+      |approx_count_distinct(UnitPrice)
+      |FROM dfTable
+      |""".stripMargin)
     .show()
 
 }

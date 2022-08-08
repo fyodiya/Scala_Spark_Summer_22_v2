@@ -1,7 +1,7 @@
 package com.github.fyodiya
 
 import org.apache.spark.sql.functions
-import org.apache.spark.sql.functions.{approx_count_distinct, countDistinct, first, last}
+import org.apache.spark.sql.functions.{approx_count_distinct, col, countDistinct, expr, first, last, sumDistinct, sum_distinct}
 
 object Aggregations extends App {
 
@@ -118,5 +118,67 @@ object Aggregations extends App {
       |SELECT first(StockCode), last(StockCode) FROM dfTable
       |""".stripMargin)
     .show(10, truncate = false)
+
+  //min and max
+  //To extract the minimum and maximum values from a DataFrame, use the min and max functions
+  df.select(functions.min("Quantity"),
+    functions.min("UnitPrice"),
+    functions.max("Quantity"),
+    functions.max("UnitPrice"))
+    .show()
+
+  //in SQL
+  spark.sql(
+    """
+      |SELECT min(Quantity), max(Quantity) FROM dfTable"""
+      .stripMargin)
+    .show(10, truncate = false)
+
+  //sum
+  //Another simple task is to add all the values in a row using the sum function:
+  df.select(functions.sum("Quantity")).show() // 5176450
+
+  //in SQL
+  spark.sql(
+    """
+      |SELECT sum(Quantity) FROM dfTable"""
+      .stripMargin)
+    .show(10, truncate = false)
+
+  //sumDistinct
+  //In addition to summing a total, you also can sum a distinct set of values by using the
+  //sumDistinct function:
+  df.select(sum_distinct(col("Quantity")))
+    .show(10, truncate = false) // 29310
+
+  //in SQL
+  spark.sql(
+    """
+      |SELECT SUM(Quantity) FROM dfTable -- 29310"""
+      .stripMargin)
+    .show(10, truncate = false)
+
+  //avg
+  //Although you can calculate average by dividing sum by count, Spark provides an easier way to
+  //get that value via the avg or mean functions. In this example, we use alias in order to more
+  //easily reuse these columns later:
+  df.select(
+    functions.count("Quantity").alias("total_transactions"),
+    functions.sum("Quantity").alias("total_purchases"),
+    functions.avg("Quantity").alias("avg_purchases"),
+    expr("mean(Quantity)").alias("mean_purchases"))
+    .withColumn("AvgRound", expr("round(total_purchases/total_transactions)"))
+    .withColumn("MyOwnAverage", expr("total_purchases/total_transactions"))
+    .selectExpr( //same as the previous row of our method/function
+      "total_purchases/total_transactions",
+      "MyOwnAverage",
+      "AvgRound",
+      "avg_purchases",
+      "mean_purchases")
+    .show()
+
+//NOTE
+  //You can also average all the distinct values by specifying distinct. In fact, most aggregate functions
+  //support doing so only on distinct values.
 
 }

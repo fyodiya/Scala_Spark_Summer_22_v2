@@ -694,3 +694,18 @@ java.io.IOException: Failed to delete: C:\Users\eafjo\AppData\Local\Temp\blockmg
 2022-08-08 15:09:26,463 WARN o.a.s.s.c.u.package [main] Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
 2022-08-08 15:09:26,721 WARN o.a.s.e.ProcfsMetricsGetter [driver-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
 2022-08-08 15:11:19,552 WARN o.a.s.s.c.u.package [main] Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+2022-08-08 21:29:43,372 WARN o.a.s.s.c.u.package [main] Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+2022-08-08 21:29:43,464 WARN o.a.s.e.ProcfsMetricsGetter [executor-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+2022-08-08 21:30:22,314 WARN o.a.s.s.c.u.package [main] Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+2022-08-08 21:44:26,144 WARN o.a.s.e.ProcfsMetricsGetter [executor-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+2022-08-08 21:44:26,441 WARN o.a.s.s.c.u.package [main] Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+2022-08-08 21:48:36,051 WARN o.a.s.e.ProcfsMetricsGetter [driver-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+2022-08-08 21:48:39,403 WARN o.a.s.s.c.u.package [main] Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+2022-08-08 21:54:10,297 WARN o.a.s.e.ProcfsMetricsGetter [executor-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+2022-08-08 21:54:13,695 WARN o.a.s.s.c.u.package [main] Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+2022-08-08 21:57:56,646 WARN o.a.s.s.c.u.package [main] Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+2022-08-08 21:57:57,105 WARN o.a.s.e.ProcfsMetricsGetter [driver-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+2022-08-08 21:59:25,932 WARN o.a.s.e.ProcfsMetricsGetter [executor-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+2022-08-08 21:59:27,077 WARN o.a.s.s.c.u.package [main] Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+2022-08-08 22:01:10,363 WARN o.a.s.e.ProcfsMetricsGetter [driver-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+2022-08-08 22:01:14,424 WARN o.a.s.s.c.u.package [main] Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
