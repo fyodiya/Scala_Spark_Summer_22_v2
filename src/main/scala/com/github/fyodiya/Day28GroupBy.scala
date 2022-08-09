@@ -88,11 +88,4 @@ object Day28GroupBy extends App {
   //TODO see if you can count distinct customers in the same function
 
 
-  //Grouping with Maps
-  //Sometimes, it can be easier to specify your transformations as a series of Maps for which the key
-  //is the column, and the value is the aggregation function (as a string) that you would like to
-  //perform. You can reuse multiple column names if you specify them inline, as well:
-
-
-
 }
