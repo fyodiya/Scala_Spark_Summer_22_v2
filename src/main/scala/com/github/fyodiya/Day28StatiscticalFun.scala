@@ -131,7 +131,4 @@ object Day28StatiscticalFun extends App {
       |""".stripMargin)
     .show(false)
 
-
-
-
 }

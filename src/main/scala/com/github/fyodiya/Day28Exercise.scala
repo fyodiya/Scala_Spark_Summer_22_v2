@@ -26,11 +26,34 @@ object Day28Exercise extends App {
     .show()
 
 
-  //TODO transform unique Countries for that day into a regular Scala Array of strings
-  val distCountries = homeworkDF.agg(collect_set("Country"))
-  //  val countryArray = distCountries.collectAsList().toArray().map(_.toString)
-  //  countryArray.foreach(println)
-  //
+  //transform unique Countries for that day into a regular Scala Array of strings
+
+  val countries = homeworkDF.agg(collect_set("Country")).collect()
+  println(countries.mkString) //prints, but we do want it to be a string
+
+  //  val countryStrings = countries.map(_.getString(0))
+//  println(countryStrings.mkString(","))
+
+  println("Printing row by row:")
+  for (row <- countries) {
+    println(row)
+  }
+//result: we have only one row, which we need to split by using regex
+  val distinctCountries = spark.sql(
+    """
+      |SELECT DISTINCT(country) FROM DFtable
+      |""".stripMargin)
+
+  distinctCountries.show()
+
+  val countryStringRows = distinctCountries.collect()
+  val countryStrings = countryStringRows.map(_.getString(0))
+  println(countryStrings.mkString(","))
+
+  val countrySeq:Seq[String] = countries.head.getSeq(0) //first column for our first row
+//  println(countrySeq.mkString("{",","}") //TODO
+
+
   //you could use SQL distinct of course - you do not have to use collect_set, but you can :)
 
 }
