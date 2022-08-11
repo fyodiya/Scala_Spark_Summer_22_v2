@@ -37,6 +37,7 @@ object Day29Exercise extends App {
     .orderBy(desc("StockCode"), col("UnitPrice"))
     .select(
       col("CustomerId"),
+      col("StockCode"),
       col("date"),
       col("Quantity"),
       col("UnitPrice"),
@@ -52,7 +53,7 @@ object Day29Exercise extends App {
 
   spark.sql(
     """
-      SELECT CustomerId, date, Quantity, UnitPrice,
+      SELECT CustomerId, StockCode, date, Quantity, UnitPrice,
       |rank(UnitPrice) OVER (PARTITION BY CustomerId, date
       |ORDER BY Quantity DESC NULLS LAST
       |ROWS BETWEEN
