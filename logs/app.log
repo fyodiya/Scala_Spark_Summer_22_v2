@@ -711,3 +711,7 @@ java.io.IOException: Failed to delete: C:\Users\eafjo\AppData\Local\Temp\blockmg
 2022-08-08 22:01:14,424 WARN o.a.s.s.c.u.package [main] Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
 2022-08-09 21:56:40,537 WARN o.a.s.e.ProcfsMetricsGetter [executor-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
 2022-08-09 21:58:03,102 WARN o.a.s.e.ProcfsMetricsGetter [executor-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+2022-08-11 11:29:03,752 WARN o.a.s.e.ProcfsMetricsGetter [driver-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+2022-08-11 11:30:33,689 WARN o.a.s.e.ProcfsMetricsGetter [executor-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+2022-08-11 11:33:43,006 WARN o.a.s.e.ProcfsMetricsGetter [driver-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+2022-08-11 11:37:21,006 WARN o.a.s.e.ProcfsMetricsGetter [driver-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped

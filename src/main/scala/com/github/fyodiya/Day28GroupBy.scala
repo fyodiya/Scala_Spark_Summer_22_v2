@@ -87,5 +87,4 @@ object Day28GroupBy extends App {
 
   //TODO see if you can count distinct customers in the same function
 
-
 }

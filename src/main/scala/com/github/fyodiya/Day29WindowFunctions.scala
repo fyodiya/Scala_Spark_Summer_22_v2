@@ -34,7 +34,7 @@ object Day29WindowFunctions extends App {
     spark.sql("set spark.sql.legacy.timeParserPolicy=LEGACY")
   //  val dfWithDate = df.withColumn("date", to_date(to_timestamp(col("InvoiceDate")),
     val dfWithDate = df.withColumn("date", to_date(col("InvoiceDate"),
-  //    "M/D/y H:mm")) //newere format
+  //    "M/D/y H:mm")) //newer format
       "MM/d/yyyy H:mm")) //legacy formatting
     dfWithDate.createOrReplaceTempView("dfWithDate")
 
@@ -111,16 +111,5 @@ object Day29WindowFunctions extends App {
         |ORDER BY CustomerId DESC, date ASC, Quantity DESC
         |""".stripMargin)
       .show(20, truncate = false)
-
-    //TODO create WindowSpec which partitions by StockCode and date, ordered by Price
-    //with rows unbounded preceding and current row
-
-    //create max min dense rank and rank for the price over the newly created WindowSpec
-
-    //show top 40 results ordered in descending order by StockCode and price
-    //show max, min, dense rank and rank for every row as well using our newly created columns(min, max, dense rank and rank)
-
-    //you can use spark api functions
-    //or you can use spark sql
 
 }
