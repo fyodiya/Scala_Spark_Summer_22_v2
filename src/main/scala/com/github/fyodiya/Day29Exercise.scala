@@ -50,4 +50,33 @@ object Day29Exercise extends App {
   //you can use spark API functions
   //or you can use spark sql
 
+  spark.sql(
+    """
+      SELECT CustomerId, date, Quantity, UnitPrice,
+      |rank(UnitPrice) OVER (PARTITION BY CustomerId, date
+      |ORDER BY Quantity DESC NULLS LAST
+      |ROWS BETWEEN
+      |UNBOUNDED PRECEDING AND
+      |CURRENT ROW) as rank,
+      |dense_rank(UnitPrice) OVER (PARTITION BY CustomerId, date
+      |ORDER BY UnitPrice DESC NULLS LAST
+      |ROWS BETWEEN
+      |UNBOUNDED PRECEDING AND
+      |CURRENT ROW) as dRank,
+      |max(UnitPrice) OVER (PARTITION BY CustomerId, date
+      |ORDER BY UnitPrice DESC NULLS LAST
+      |ROWS BETWEEN
+      |UNBOUNDED PRECEDING AND
+      |CURRENT ROW) as maxUnitPrice,
+      |
+      |min(UnitPrice) OVER (PARTITION BY CustomerId, date
+      |ORDER BY UnitPrice ASC NULLS LAST
+      |ROWS BETWEEN
+      |UNBOUNDED PRECEDING AND
+      |CURRENT ROW) as minUnitPrice
+      |
+      |FROM dfWithDate WHERE CustomerId IS NOT NULL ORDER BY StockCode
+      |""".stripMargin
+  ).show(40, truncate = false)
+
 }
