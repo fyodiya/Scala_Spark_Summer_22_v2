@@ -68,15 +68,13 @@ object Day29Exercise extends App {
       |ROWS BETWEEN
       |UNBOUNDED PRECEDING AND
       |CURRENT ROW) as maxUnitPrice,
-      |
       |min(UnitPrice) OVER (PARTITION BY CustomerId, date
       |ORDER BY UnitPrice ASC NULLS LAST
       |ROWS BETWEEN
       |UNBOUNDED PRECEDING AND
       |CURRENT ROW) as minUnitPrice
-      |
       |FROM dfWithDate WHERE CustomerId IS NOT NULL ORDER BY StockCode
-      |""".stripMargin
-  ).show(40, truncate = false)
+      |""".stripMargin)
+    .show(40, truncate = false)
 
 }
