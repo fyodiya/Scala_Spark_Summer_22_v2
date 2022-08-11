@@ -8,7 +8,6 @@ object Day28GroupBy extends App {
 
   println("Chapter 7: Grouping expressions!")
   val spark = SparkUtilities.getOrCreateSpark("Sandbox for grouping by")
-
   val df = readDataWithView(spark, "src/resources/retail-data/by-day/2010-12-01.csv")
 
 
@@ -81,10 +80,9 @@ object Day28GroupBy extends App {
       expr("round(std(total),2) as saleSTD"),
       expr("first(CustomerID) as firstCustomer"),
       expr("last(CustomerID) as lastCustomer"),
+      expr("count(Distinct CustomerID) as distinctCustomers"), //count distinct customers in the same function
       expr("count(CustomerId) as customersPerCountry"))
     .orderBy(desc("totalSales"))
     .show(10, truncate = false)
-
-  //TODO see if you can count distinct customers in the same function
 
 }
