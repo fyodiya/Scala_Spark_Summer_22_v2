@@ -12,6 +12,7 @@ object Day29Exercise extends App {
   //create WindowSpec which partitions by StockCode and date, ordered by Price
 
   spark.sql("set spark.sql.legacy.timeParserPolicy=LEGACY")
+
   val dfWithDate = df.withColumn("date", to_date(col("InvoiceDate"),
 //    "MM/d/yyyy H:mm"))
     "M/D/y H:mm"))
@@ -33,7 +34,7 @@ object Day29Exercise extends App {
   //show top 40 results ordered in descending order by StockCode and price
   //show max, min, dense rank and rank for every row as well using our newly created columns(min, max, dense rank and rank)
 
-  dfWithDate.where("CustomerId IS NOT NULL")
+  dfWithDate.where("StockCode IS NOT NULL")
     .orderBy(desc("StockCode"), col("UnitPrice"))
     .select(
       col("CustomerId"),
@@ -55,26 +56,27 @@ object Day29Exercise extends App {
     """
       SELECT CustomerId, StockCode, date, Quantity, UnitPrice,
       |rank(UnitPrice) OVER (PARTITION BY CustomerId, date
-      |ORDER BY Quantity DESC NULLS LAST
+      |ORDER BY StockCode DESC, UnitPrice DESC NULLS LAST
       |ROWS BETWEEN
       |UNBOUNDED PRECEDING AND
       |CURRENT ROW) as rank,
       |dense_rank(UnitPrice) OVER (PARTITION BY CustomerId, date
-      |ORDER BY UnitPrice DESC NULLS LAST
+      |ORDER BY StockCode DESC NULLS LAST
       |ROWS BETWEEN
       |UNBOUNDED PRECEDING AND
       |CURRENT ROW) as dRank,
       |max(UnitPrice) OVER (PARTITION BY CustomerId, date
-      |ORDER BY UnitPrice DESC NULLS LAST
+      |ORDER BY StockCode DESC NULLS LAST
       |ROWS BETWEEN
       |UNBOUNDED PRECEDING AND
       |CURRENT ROW) as maxUnitPrice,
       |min(UnitPrice) OVER (PARTITION BY CustomerId, date
-      |ORDER BY UnitPrice ASC NULLS LAST
+      |ORDER BY StockCode ASC NULLS LAST
       |ROWS BETWEEN
       |UNBOUNDED PRECEDING AND
       |CURRENT ROW) as minUnitPrice
-      |FROM dfWithDate WHERE CustomerId IS NOT NULL ORDER BY StockCode
+      |FROM dfWithDate WHERE CustomerId IS NOT NULL
+      |ORDER BY StockCode DESC, UnitPrice DESC
       |""".stripMargin)
     .show(40, truncate = false)
 

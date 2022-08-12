@@ -1,8 +1,7 @@
 package com.github.fyodiya
 
 import com.github.fyodiya.SparkUtilities.readDataWithView
-import org.apache.spark.sql.functions
-import org.apache.spark.sql.functions.{col, count, expr, sum, to_date}
+import org.apache.spark.sql.functions.{col, count, expr, grouping_id, sum, to_date}
 
 object Day29Rollups extends App {
 
@@ -45,5 +44,68 @@ object Day29Rollups extends App {
 
   //this will show sales, quantity and total quantity sold for day by day
   rolledUpDF.where("Country IS NULL").show(50)
+
+  //Cube
+  //A cube takes the rollup to a level deeper. Rather than treating elements hierarchically, a cube
+  //does the same thing across all dimensions. This means that it won’t just go by date over the
+  //entire time period, but also the country. To pose this as a question again, can you make a table
+  //that includes the following?
+  //The total across all dates and countries
+  //The total for each date across all countries
+  //The total for each country on each date
+  //The total for each country across all dates
+  //The method call is quite similar, but instead of calling rollup, we call cube:
+
+  //cubes are stats for everything involving these two columns
+  dfNoNull.cube("Date", "Country")
+    .agg(grouping_id(),sum(col("Quantity")), sum("total"))
+    .select("Date", "Country", "grouping_id()", "sum(Quantity)", "sum(total)").orderBy("Date")
+    .show(50)
+
+  //This is a quick and easily accessible summary of nearly all of the information in our table, and
+  //it’s a great way to create a quick summary table that others can use later on.
+
+  //Grouping Metadata
+  //Sometimes when using cubes and rollups, you want to be able to query the aggregation levels so
+  //that you can easily filter them down accordingly. We can do this by using the grouping_id,
+  //which gives us a column specifying the level of aggregation that we have in our result set. The
+  //query in the example that follows returns four distinct grouping IDs:
+
+  dfNoNull.cube("customerId", "stockCode")
+    .agg(grouping_id(), sum("Quantity"), sum("total"))
+    .orderBy(expr("grouping_id()").desc)
+    .show()
+
+  //Pivot
+  //Pivots make it possible for you to convert a row into a column. For example, in our current data
+  //we have a Country column. With a pivot, we can aggregate according to some function for each
+  //of those given countries and display them in an easy-to-query way:
+
+  val pivoted = dfWithDate.groupBy("date").pivot("Country").sum()
+
+  //his DataFrame will now have a column for every combination of country, numeric variable,
+  //and a column specifying the date. For example, for USA we have the following columns:
+  //USA_sum(Quantity), USA_sum(UnitPrice), USA_sum(CustomerID). This represents one for
+  //each numeric column in our dataset (because we just performed an aggregation over all of them).
+  //Here’s an example query and result from this data:
+
+  pivoted.where("date > '2011-12-05'").select("date" ,"`USA_sum(Quantity)`").show()
+
+  //Now all of the columns can be calculated with single groupings, but the value of a pivot comes
+  //down to how you would like to explore the data. It can be useful, if you have low enough
+  //cardinality in a certain column to transform it into columns so that users can see the schema and
+  //immediately know what to query for.
+
+
+  dfWithDate.show(5, truncate = false)
+  dfWithDate
+    .select("Country")
+    .distinct()
+    .orderBy("Country")
+    .show(30)
+
+  val pivotedToo = dfWithDate.groupBy("date").pivot("Country").sum()
+  pivotedToo.show(20, truncate = false)
+  //many columns equal to distinct country count * numeric columns in original df
 
 }
