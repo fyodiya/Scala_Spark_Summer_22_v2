@@ -794,3 +794,5 @@ java.lang.NullPointerException: null
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) ~[?:1.8.0_332]
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) ~[?:1.8.0_332]
 	at java.lang.Thread.run(Thread.java:750) ~[?:1.8.0_332]
+2022-08-13 11:58:49,833 WARN o.a.s.e.ProcfsMetricsGetter [driver-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+2022-08-13 12:19:02,478 WARN o.a.s.e.ProcfsMetricsGetter [driver-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
