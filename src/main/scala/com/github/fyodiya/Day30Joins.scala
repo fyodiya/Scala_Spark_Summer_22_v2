@@ -101,4 +101,49 @@ object Day30Joins extends App {
       |ON person.graduate_program = graduateProgram.id""".stripMargin)
     .show()
 
+  //We can also specify the type of join explicitly
+  //by passing in a third parameter, the joinType:
+  person.join(graduateProgram, joinExpression, joinType = "inner").show()
+
+  //in SQl
+  spark.sql(
+    """
+      |SELECT * FROM person INNER JOIN graduateProgram
+      |ON person.graduate_program = graduateProgram.id
+      |""".stripMargin)
+    .show()
+
+  //Outer Joins
+  //Outer joins evaluate the keys in both of the DataFrames or tables and includes (and joins
+  //together) the rows that evaluate to true or false. If there is no equivalent row in either the left or
+  //right DataFrame, Spark will insert null:
+
+  joinType = "outer"
+  person.join(graduateProgram, joinExpression, joinType).show()
+  person.join(graduateProgram, joinExpression, "outer").show()
+
+  spark.sql(
+    """
+      |SELECT * FROM person FULL OUTER JOIN graduateProgram
+      |ON graduate_program = graduateProgram.id
+      |""".stripMargin)
+    .show()
+
+  //Left Outer Joins
+  //Left outer joins evaluate the keys in both of the DataFrames or tables and includes all rows from
+  //the left DataFrame as well as any rows in the right DataFrame that have a match in the left
+  //DataFrame. If there is no equivalent row in the right DataFrame, Spark will insert null:
+
+  joinType = "left_outer"
+  graduateProgram.join(person, joinExpression, joinType).show()
+
+  //in SQl
+  spark.sql(
+    """
+      |SELECT * FROM graduateProgram LEFT OUTER JOIN person
+      |ON person.graduate_program = graduateProgram.id
+      |""".stripMargin)
+
+
+
 }
