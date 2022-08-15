@@ -176,6 +176,7 @@
     <orderEntry type="library" name="sbt: org.typelevel:spire-util_2.13:0.17.0:jar" level="project" />
     <orderEntry type="library" name="sbt: org.typelevel:spire_2.13:0.17.0:jar" level="project" />
     <orderEntry type="library" name="sbt: org.xerial.snappy:snappy-java:1.1.8.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.xerial:sqlite-jdbc:3.39.2.0:jar" level="project" />
     <orderEntry type="library" name="sbt: oro:oro:2.0.8:jar" level="project" />
     <orderEntry type="library" name="sbt: pl.edu.icm:JLargeArrays:1.5:jar" level="project" />
     <orderEntry type="module-library">
