@@ -33,10 +33,10 @@ object Day31Parquet extends App {
   spark.read.format("parquet")
   //or
   val df = spark.read.format("parquet")
-    //    .load("src/resources/flight-data/parquet/2010-summary.parquet")
+        .load("src/resources/flight-data/parquet/2010-summary.parquet")
     //version mismatch generates warnings - creator metadata not preserved
     //https://stackoverflow.com/questions/42320157/warnings-trying-to-read-spark-1-6-x-parquet-into-spark-2-x
-    .load("src/resources/flight-data/parquet/2010-summary_fixed.parquet")
+//    .load("src/resources/flight-data/parquet/2010-summary_fixed.parquet")
 
   df.show(5)
   df.describe().show()
@@ -50,19 +50,19 @@ object Day31Parquet extends App {
     .save("src/resources/flight-data/parquet/2010-summary_fixed.parquet")
 
   //TODO read parquet file from src/resources/regression
-  val homework = spark.read.format("parquet")
-    .load("src/resources/regression.parquet")
+  val homeworkDF = spark.read.format("parquet")
+    .load("src/resources/regression")
 
-  //TODO print schema
-  homework.printSchema()
+  //print schema
+  homeworkDF.printSchema()
 
-  //TODO print a sample of some rows
-  homework.show(5)
+  //print a sample of some rows
+  homeworkDF.show(5)
 
-  //TODO show some basic statistics - describe would be a good start
-  homework.describe().show()
+  //show some basic statistics - describe would be a good start
+  homeworkDF.describe().show()
 
-  //TODO if you encounter warning reading data THEN save into src/resources/regression_fixed
+  //if you encounter warning reading data THEN save into src/resources/regression_fixed
 //csvFile.write.format("parquet").mode("overwrite")
   //.save("src/resources/regression_fixed.parquet")
 
