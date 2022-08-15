@@ -1,6 +1,7 @@
 package com.github.fyodiya
 
 import com.github.fyodiya.SparkUtilities.getOrCreateSpark
+import org.apache.spark.sql.functions.desc
 import org.apache.spark.sql.types.{LongType, StringType, StructField, StructType}
 
 object Day31DataSources extends App {
@@ -136,6 +137,45 @@ object Day31DataSources extends App {
     .option("header", value = true) //we want to preserve headers
     .save("src/resources/tmp/my-tsv-file.tsv") //this way Spark will create needed folders if they do not exist
 
+  //JSON Files
+  //Those coming from the world of JavaScript are likely familiar with JavaScript Object Notation,
+  //or JSON, as it’s commonly called. There are some catches when working with this kind of data
+  //that are worth considering before we jump in. In Spark, when we refer to JSON files, we refer to
+  //line-delimited JSON files. This contrasts with files that have a large JSON object or array per
+  //file.
+  //The line-delimited versus multiline trade-off is controlled by a single option: multiLine. When
+  //you set this option to true, you can read an entire file as one json object and Spark will go
+  //through the work of parsing that into a DataFrame. Line-delimited JSON is actually a much more
+  //stable format because it allows you to append to a file with a new record (rather than having to
+  //read in an entire file and then write it out), which is what we recommend that you use. Another
+  //key reason for the popularity of line-delimited JSON is because JSON objects have structure,
+  //and JavaScript (on which JSON is based) has at least basic types. This makes it easier to work
+  //with because Spark can make more assumptions on our behalf about the data. You’ll notice that
+  //there are significantly less options than we saw for CSV because of the objects
 
+  //https://spark.apache.org/docs/latest/sql-data-sources-json.html
+
+  val jsonDF = spark.read
+    .format("json")
+    .option("mode", "FAILFAST") //a fail on error instead of making null values
+    .schema(myManualSchema) //optional
+    .load("src/resources/flight-data/json/2010-summary.json")
+
+  jsonDF.describe().show()
+  jsonDF.show(5)
+
+  //Writing JSON Files
+  //Writing JSON files is just as simple as reading them, and, as you might expect, the data source
+  //does not matter. Therefore, we can reuse the CSV DataFrame that we created earlier to be the
+  //source for our JSON file. This, too, follows the rules that we specified before: one file per
+  //partition will be written out, and the entire DataFrame will be written out as a folder. It will also
+  //have one JSON object per line:
+
+  csvDF.orderBy(desc("count"))
+    .limit(10) //so just top 10 rows of our current DataFramm ordered descending by count
+    .write
+    .format("json")
+    .mode("overwrite")
+    .save("src/resources/tmp/my-json-file.json")
 
 }
