@@ -12,7 +12,10 @@ object SparkUtilities {
    * @param master by default it is "local", master URL to connect to
    * @return sparkSession
    */
-  def getOrCreateSpark(appName: String, partitionCount: Int = 5, master:String = "local",  verbose:Boolean = true): SparkSession = {
+  def getOrCreateSpark(appName: String,
+                       partitionCount: Int = 5,
+                       master:String = "local",
+                       verbose:Boolean = true): SparkSession = {
     if (verbose) println(s"$appName with Scala version: ${util.Properties.versionNumberString}")
     val sparkSession = SparkSession.builder().appName(appName).master("local").getOrCreate()
     sparkSession.conf.set("spark.sql.shuffle.partitions", partitionCount)
@@ -54,6 +57,5 @@ object SparkUtilities {
     if (cacheOn) df.cache()
     df
   }
-
 
 }
