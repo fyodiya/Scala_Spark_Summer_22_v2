@@ -172,10 +172,12 @@ object Day31DataSources extends App {
   //have one JSON object per line:
 
   csvDF.orderBy(desc("count"))
-    .limit(10) //so just top 10 rows of our current DataFramm ordered descending by count
+    .limit(10) //just top 10 rows of our current DataFrame ordered descending by count
     .write
     .format("json")
     .mode("overwrite")
     .save("src/resources/tmp/my-json-file.json")
+
+  //no need for headers since the header information is embedded inside the rows
 
 }
