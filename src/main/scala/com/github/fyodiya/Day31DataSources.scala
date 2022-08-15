@@ -9,7 +9,6 @@ object Day31DataSources extends App {
   println("Chapter 8: Reading and writing data sources!")
   val spark = SparkUtilities.getOrCreateSpark("Playground for reading/writing data sources")
 
-  val Spark = getOrCreateSpark("Sandbox")
 
   //The goal of this chapter is to give you the ability to read and write from Spark’s core data
   //sources and know enough to understand what you should look for when integrating with thirdparty data sources. To achieve this, we will focus on the core concepts that you need to be able to

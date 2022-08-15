@@ -49,11 +49,15 @@ object Day31Parquet extends App {
     .mode("overwrite") //we also could use .option("mode", "overwrite") but then it's harder to debug typos
     .save("src/resources/flight-data/parquet/2010-summary_fixed.parquet")
 
-  //TODO read parquet file from src/resources/regression
+  //read parquet file from src/resources/regression
   val homeworkDF = spark.read.format("parquet")
     .load("src/resources/regression")
 
   //print schema
+  homeworkDF.printSchema()
+
+//  val dfSchema = homeworkDF.schema()
+//if we need to use schema somewhere else
   homeworkDF.printSchema()
 
   //print a sample of some rows
@@ -65,5 +69,21 @@ object Day31Parquet extends App {
   //if you encounter warning reading data THEN save into src/resources/regression_fixed
 //csvFile.write.format("parquet").mode("overwrite")
   //.save("src/resources/regression_fixed.parquet")
+
+
+  //ORC Files
+  //ORC is a self-describing, type-aware columnar file format designed for Hadoop workloads. It is
+  //optimized for large streaming reads, but with integrated support for finding required rows
+  //quickly. ORC actually has no options for reading in data because Spark understands the file
+  //format quite well. An often-asked question is: What is the difference between ORC and Parquet?
+  //For the most part, they’re quite similar; the fundamental difference is that Parquet is further
+  //optimized for use with Spark, whereas ORC is further optimized for Hive.
+  spark.read
+    .format("orc")
+    .load("src/resources/flight-data/orc/2010-summary.orc")
+    .show(5)
+
+  //writing ORC files
+  df.write.format("orc").mode("overwrite").save("/tmp/my-json-file.orc")
 
 }
