@@ -1,7 +1,6 @@
 package com.github.fyodiya
 
 import com.github.fyodiya.SparkUtilities.{getOrCreateSpark, readDataWithView}
-
 import org.apache.spark.ml.feature.RFormula
 
   object Day32Exercise extends App {
@@ -34,7 +33,7 @@ import org.apache.spark.ml.feature.RFormula
       .setFeaturesCol("MyFeatures")
       .setLabelCol("MyLabel")
 
-    val outputAgain = allColumnsFeatures.fit(df).transform(df)
-    outputAgain.show()
+    val outputDFAgain = allColumnsFeatures.fit(df).transform(df)
+    outputDFAgain.show()
 
 }

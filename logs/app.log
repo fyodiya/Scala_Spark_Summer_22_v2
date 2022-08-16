@@ -985,3 +985,4 @@ org.apache.parquet.VersionParser$VersionParseException: Could not parse created_
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) ~[?:1.8.0_332]
 	at java.lang.Thread.run(Thread.java:750) ~[?:1.8.0_332]
 2022-08-15 21:14:47,852 WARN o.a.h.i.c.z.ZlibFactory [Executor task launch worker for task 0.0 in stage 1.0 (TID 1)] Failed to load/initialize native-zlib library
+2022-08-16 20:57:08,825 WARN o.a.s.e.ProcfsMetricsGetter [executor-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
