@@ -22,18 +22,19 @@ import org.apache.spark.ml.feature.RFormula
 
     //create output dataframe with the the formula performing fit and transform
     val outputDF = formula.fit(df).transform(df)
-    outputDF.show()
+    outputDF.show(false)
+    outputDF.printSchema()
 
     //BONUS
     //try creating features from ALL columns in the Dec1st CSV except of course Country (using . syntax)
     //This should generate very sparse column of features because of one hot encoding
 
-    val allColumnsFeatures = new RFormula()
+    val anotherFormula = new RFormula()
       .setFormula("Country ~ .")
       .setFeaturesCol("MyFeatures")
       .setLabelCol("MyLabel")
 
-    val outputDFAgain = allColumnsFeatures.fit(df).transform(df)
+    val outputDFAgain = anotherFormula.fit(df).transform(df)
     outputDFAgain.show()
 
 }
