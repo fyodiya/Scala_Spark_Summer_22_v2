@@ -166,4 +166,5 @@ AS flight_info"""
   //blocks. In conjunction with this is a need to manage compression. Not all compression schemes
   //are splittable. How you store your data is of immense consequence when it comes to making
   //your Spark jobs run smoothly. We recommend Parquet with gzip compression.
+
 }
