@@ -1,0 +1,6 @@
+22/08/18 14:16:35 WARN util.package: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+22/08/18 14:16:42 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/18 14:21:53 WARN fyodiya.Day18Logging: This is a warning.
+22/08/18 14:21:53 ERROR fyodiya.Day18Logging: This is an error!
+22/08/18 14:42:20 WARN util.package: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+22/08/18 14:42:30 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
