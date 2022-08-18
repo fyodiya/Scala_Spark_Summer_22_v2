@@ -986,6 +986,7 @@ org.apache.parquet.VersionParser$VersionParseException: Could not parse created_
 	at java.lang.Thread.run(Thread.java:750) ~[?:1.8.0_332]
 2022-08-15 21:14:47,852 WARN o.a.h.i.c.z.ZlibFactory [Executor task launch worker for task 0.0 in stage 1.0 (TID 1)] Failed to load/initialize native-zlib library
 2022-08-16 20:57:08,825 WARN o.a.s.e.ProcfsMetricsGetter [executor-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+<<<<<<< HEAD
 2022-08-16 21:36:52,436 WARN o.a.s.e.ProcfsMetricsGetter [executor-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
 2022-08-18 14:03:28,319 WARN o.a.s.e.ProcfsMetricsGetter [driver-heartbeater] Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
 2022-08-18 14:03:28,695 ERROR o.a.s.ContextCleaner [Spark Context Cleaner] Error cleaning shuffle 5
@@ -1607,3 +1608,5 @@ java.lang.NullPointerException: null
 	at java.lang.Thread.run(Thread.java:750) ~[?:1.8.0_332]
 2022-08-18 14:39:54,548 WARN c.g.f.Day18Logging [main] This is a warning
 2022-08-18 14:39:54,558 ERROR c.g.f.Day18Logging [main] This is an error!
+=======
+>>>>>>> parent of 4965d9b (Machine Learning and Pipelines)

@@ -32,11 +32,9 @@ import org.apache.spark.ml.feature.RFormula
     val anotherFormula = new RFormula()
       .setFormula("Country ~ .")
       .setFeaturesCol("MyFeatures")
-      .setLabelCol("MyLabel") //this creates one hat encoding for all string columns
-    //if you have many distinct values in these strings columns
-    //you will get a very wide (and sparse) vector
+      .setLabelCol("MyLabel")
 
     val outputDFAgain = anotherFormula.fit(df).transform(df)
-    outputDFAgain.show(false)
+    outputDFAgain.show()
 
 }
