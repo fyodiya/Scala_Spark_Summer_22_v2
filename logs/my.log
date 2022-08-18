@@ -6,3 +6,40 @@
 22/08/18 14:42:30 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
 22/08/18 15:08:30 WARN util.package: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
 22/08/18 20:02:55 WARN util.package: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+22/08/18 20:40:49 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/18 20:42:38 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/18 20:43:24 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/18 20:48:40 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/18 20:48:43 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/18 20:52:59 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/18 20:54:01 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/18 20:54:03 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/18 20:54:36 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/18 20:56:28 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/18 21:07:23 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/18 21:07:29 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/18 21:08:13 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/18 21:08:18 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/18 21:10:04 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/18 21:10:04 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/18 21:12:12 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/18 21:13:23 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/18 21:13:26 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/18 21:14:53 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/18 21:16:33 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/18 21:38:43 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/18 21:38:48 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/18 21:41:32 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/18 21:41:36 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/18 21:42:50 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/18 21:42:51 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/18 21:43:58 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/18 21:43:59 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/18 21:51:29 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/18 21:51:34 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/18 21:52:36 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/18 21:52:38 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/18 21:59:08 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/18 21:59:12 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/18 22:02:52 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/18 22:02:54 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library

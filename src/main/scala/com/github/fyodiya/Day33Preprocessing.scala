@@ -1,12 +1,13 @@
 package com.github.fyodiya
 
 import com.github.fyodiya.SparkUtilities.getOrCreateSpark
-import org.apache.spark.ml.feature.{StandardScaler, Tokenizer, VectorAssembler}
-import org.apache.spark.sql.functions.expr
+import org.apache.spark.ml.feature.{SQLTransformer, StandardScaler, Tokenizer, VectorAssembler}
+import org.apache.spark.sql.functions
+import org.apache.spark.sql.functions.{col, expr}
 
-object Day33PreProcessing extends App {
+object Day33Preprocessing extends App {
 
-  println("Day 33: Pre-processing and feature engineering")
+  println("Day 33: Preprocessing and feature engineering")
   val spark = getOrCreateSpark("Sparky")
 
 
@@ -80,8 +81,10 @@ object Day33PreProcessing extends App {
   //tokenizer is built to accept the input column, how it transforms the data, and then the output from
   //that transformation:
 
-  val tkn = new Tokenizer().setInputCol("Description")
-  tkn.transform(sales.select("Description")).show(false)
+  val tkn = new Tokenizer()
+    .setInputCol("Description")
+    .setOutputCol("MyTokens")
+  val tokenizedDF = tkn.transform(sales.select("Description"))
 
 //Estimators for Preprocessing
   //Another tool for preprocessing are estimators. An estimator is necessary when a transformation
@@ -134,5 +137,61 @@ object Day33PreProcessing extends App {
     .setWithMean(true ) //default is false
 
   scalerWithMean.fit(dfAssembled).transform(dfAssembled).show(false)
+
+  //SQL Transformers
+  //A SQLTransformer allows you to leverage Spark’s vast library of SQL-related manipulations
+  //just as you would a MLlib transformation. Any SELECT statement you can use in SQL is a valid
+  //transformation. The only thing you need to change is that instead of using the table name, you
+  //should just use the keyword THIS. You might want to use SQLTransformer if you want to
+  //formally codify some DataFrame manipulation as a preprocessing step, or try different SQL
+  //expressions for features during hyperparameter tuning. Also note that the output of this
+  //transformation will be appended as a column to the output DataFrame.
+  //You might want to use an SQLTransformer in order to represent all of your manipulations on the
+  //very rawest form of your data so you can version different variations of manipulations as
+  //transformers. This gives you the benefit of building and testing varying pipelines, all by simply
+  //swapping out transformers. The following is a basic example of using SQLTransformer:
+
+  val basicTransformation = new SQLTransformer()
+    .setStatement("""
+        SELECT sum(Quantity) as sumQuant, count(*) as rowCount, CustomerID
+        FROM __THIS__
+        GROUP BY CustomerID
+        ORDER BY sumQuant
+        """)
+  basicTransformation.transform(sales).show()
+//transformation gives a DF, no matter what data was put into thia transformation
+
+  val groupedByCustomer = basicTransformation.transform(sales)
+  groupedByCustomer.show(10, truncate = false)
+
+  val simpleTransformation = new SQLTransformer()
+    .setStatement(
+      """
+        |SELECT *, CHAR_LENGTH(Description) as descLength
+        |FROM __THIS__
+        |""".stripMargin
+    )
+
+  val descriptionDF = simpleTransformation.transform(sales)
+
+  //using regular SQl
+  sales
+    .withColumn("descLength", expr("CHAR_LENGTH(Description)"))
+    .show(10, truncate = false)
+
+  descriptionDF.printSchema()
+  descriptionDF.show(10, truncate = false)
+
+  tokenizedDF.printSchema()
+  tokenizedDF.show(5, truncate = false)
+
+//  tokenizedDF
+  //  .withColumn("tokenCount", expr("array_size(MyTokens)"))
+//    .show(10, truncate = false)
+
+  tokenizedDF
+    .withColumn("tokenCount", functions.size(col("MyTokens")))
+    .show(10, truncate = false)
+  //there should a SQl way of doing the same
 
 }
