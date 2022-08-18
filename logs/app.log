@@ -1610,3 +1610,5 @@ java.lang.NullPointerException: null
 2022-08-18 14:39:54,558 ERROR c.g.f.Day18Logging [main] This is an error!
 =======
 >>>>>>> parent of 4965d9b (Machine Learning and Pipelines)
+2022-08-18 15:08:46,988 WARN c.g.f.Day18Logging [main] This is a warning
+2022-08-18 15:08:46,997 ERROR c.g.f.Day18Logging [main] This is an error!
