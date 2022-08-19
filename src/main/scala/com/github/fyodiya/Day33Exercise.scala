@@ -1,7 +1,11 @@
 package com.github.fyodiya
 
+import com.github.fyodiya.Day33Preprocessing.scaleDF
 import com.github.fyodiya.SparkUtilities.getOrCreateSpark
-import org.apache.spark.ml.feature.Tokenizer
+import org.apache.spark.ml.feature.{StandardScaler, Tokenizer, VectorAssembler}
+import org.apache.spark.sql.catalyst.dsl.expressions.StringToAttributeConversionHelper
+import org.apache.spark.sql.functions.{col, concat_ws, expr, lit}
+import org.apache.spark.sql.{Column, functions}
 
 object Day33Exercise extends App {
 
@@ -9,7 +13,7 @@ object Day33Exercise extends App {
 
   //Read text from url
   val url = "https://www.gutenberg.org/files/11/11-0.txt"
-  val dst = "src/resources/Alice.txt"
+  val dst = "src/resources/text/Alice.txt"
   Utilities.getTextFromWebAndSave(url, dst)
 
   //above link shows how to read csv file from url
@@ -18,27 +22,52 @@ object Day33Exercise extends App {
   //https://www.gutenberg.org/files/11/11-0.txt - Alice in Wonderland
   //https://stackoverflow.com/questions/44961433/process-csv-from-rest-api-into-spark
 
-  val filePath = "src/resources/text/Alice"
-
   //create a DataFrame with a single column called text which contains above book line by line
-  val df = spark.read.textFile(filePath).toDF("text")
+  val df = spark.read.textFile(dst).toDF("text")
 
   //create new column called words with will contain Tokenized words of text column
-  val tkn = new Tokenizer()
+  val tknDF = new Tokenizer()
     .setInputCol("text")
-    .setOutputCol("words")
-  val tokenDF = tkn.transform(df.select("text"))
+    .setOutputCol("tokenizedWords")
 
-  tokenDF.show()
+  //create column called textLen which will be a character count in text column
+  //https://spark.apache.org/docs/2.3.0/api/sql/index.html#length can use or also length function from spark
+  //create column wordCount which will be a count of words in words column //can use count or length - words column will be Array type
 
-  //TODO create column called textLen which will be a character count in text column //https://spark.apache.org/docs/2.3.0/api/sql/index.html#length can use or also length function from spark
+  val tknDFWithColumns = tknDF.transform(df.select("text"))
+    .withColumn("textLen", expr("CHAR_LENGTH(text)"))
+    .withColumn("wordCount", functions.size(col("tokenizedWords")))
+//    .show(10, truncate = false)
 
-  //TODO create column wordCount which will be a count of words in words column //can use count or length - words column will be Array type
-  //TODO create Vector Assembler which will transform textLen and wordCount into a column called features //features column will have a Vector with two of those values
+  //create Vector Assembler which will transform textLen and wordCount into a column called features
+  //features column will have a Vector with two of those values
+  val va = new VectorAssembler()
+    .setInputCols(Array("textLen", "wordCount"))
+    .setOutputCol("features") //otherwise we will get a long hash type column name
+  val dfAssembled = va.transform(tknDFWithColumns)
+  dfAssembled.show()
 
-  //TODO create StandardScaler which will take features column and output column called scaledFeatures //it should be using mean and variance (so both true)
+  //create StandardScaler which will take features column and output column called scaledFeatures
+  //it should be using mean and variance (so both true)
+  val ss = new StandardScaler()
+    .setInputCol("features")
+    .setOutputCol("scaledFeatures")
+    .setWithStd(true)
+    .setWithMean(true)
+  ss.fit(dfAssembled).transform(dfAssembled)
+//    .show(12, truncate = false)
 
   //TODO create a dataframe with all these columns - save to alice.csv file with all columns
+  val finalDF = ss.fit(dfAssembled).transform(dfAssembled)
 
+  finalDF.printSchema()
+//tokenizedWords - Array
+
+  finalDF.withColumn("tokenizedWords", col("tokenizedWords").cast("string"))
+    .write.csv("/src/resources/csv/Alice.csv")
+
+  //df.withColumn('workExperience', col('workExperience').cast('string')).write.csv('path')
+
+  //finalDF.write.format("csv").save("/src/resources/csv/Alice.csv")
 
 }
