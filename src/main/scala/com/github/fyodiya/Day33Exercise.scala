@@ -1,10 +1,8 @@
 package com.github.fyodiya
 
-import com.github.fyodiya.Day33Preprocessing.scaleDF
 import com.github.fyodiya.SparkUtilities.getOrCreateSpark
 import org.apache.spark.ml.feature.{StandardScaler, Tokenizer, VectorAssembler}
-import org.apache.spark.sql.catalyst.dsl.expressions.StringToAttributeConversionHelper
-import org.apache.spark.sql.functions.{col, concat_ws, expr, lit}
+import org.apache.spark.sql.functions.{col, concat_ws, explode, expr, lit}
 import org.apache.spark.sql.{Column, functions}
 
 object Day33Exercise extends App {
@@ -23,7 +21,8 @@ object Day33Exercise extends App {
   //https://stackoverflow.com/questions/44961433/process-csv-from-rest-api-into-spark
 
   //create a DataFrame with a single column called text which contains above book line by line
-  val df = spark.read.textFile(dst).toDF("text")
+  val df = spark.read.textFile(dst)
+    .toDF("text")
 
   //create new column called words with will contain Tokenized words of text column
   val tknDF = new Tokenizer()
@@ -37,7 +36,7 @@ object Day33Exercise extends App {
   val tknDFWithColumns = tknDF.transform(df.select("text"))
     .withColumn("textLen", expr("CHAR_LENGTH(text)"))
     .withColumn("wordCount", functions.size(col("tokenizedWords")))
-//    .show(10, truncate = false)
+//    .show()
 
   //create Vector Assembler which will transform textLen and wordCount into a column called features
   //features column will have a Vector with two of those values
@@ -45,7 +44,7 @@ object Day33Exercise extends App {
     .setInputCols(Array("textLen", "wordCount"))
     .setOutputCol("features") //otherwise we will get a long hash type column name
   val dfAssembled = va.transform(tknDFWithColumns)
-  dfAssembled.show()
+//  dfAssembled.show()
 
   //create StandardScaler which will take features column and output column called scaledFeatures
   //it should be using mean and variance (so both true)
@@ -54,20 +53,27 @@ object Day33Exercise extends App {
     .setOutputCol("scaledFeatures")
     .setWithStd(true)
     .setWithMean(true)
-  ss.fit(dfAssembled).transform(dfAssembled)
-//    .show(12, truncate = false)
-
-  //TODO create a dataframe with all these columns - save to alice.csv file with all columns
   val finalDF = ss.fit(dfAssembled).transform(dfAssembled)
 
-  finalDF.printSchema()
-//tokenizedWords - Array
+  //create a dataframe with all these columns - save to alice.csv file with all columns
 
-  finalDF.withColumn("tokenizedWords", col("tokenizedWords").cast("string"))
-    .write.csv("/src/resources/csv/Alice.csv")
+//  finalDF.printSchema() //tokenizedWords - Array
+  //casting to String, so that the error disappears: Exception: CSV data source does not support map<string,bigint> data type
 
-  //df.withColumn('workExperience', col('workExperience').cast('string')).write.csv('path')
+  val AliceDF = finalDF
+    .withColumn("text", col("text").cast("string"))
+    .withColumn("textLen", col("textLen").cast("string"))
+    .withColumn("wordCount", col("wordCount").cast("string"))
+    .withColumn("tokenizedWordsString", col("tokenizedWords").cast("string"))
+    .withColumn("features", col("features").cast("string"))
+    .withColumn("scaledFeatures", col("scaledFeatures").cast("string"))
+    .drop("tokenizedWords")
 
-  //finalDF.write.format("csv").save("/src/resources/csv/Alice.csv")
+  AliceDF
+    .write
+    .format("csv")
+    .option("header", "true")
+    .mode("overwrite")
+    .save("src/resources/text/csv/Alice.csv")
 
 }
