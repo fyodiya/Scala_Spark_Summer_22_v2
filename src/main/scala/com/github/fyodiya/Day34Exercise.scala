@@ -13,12 +13,13 @@ object Day34Exercise extends App {
   Utilities.getTextFromWebAndSave(url, dst)
   val df = spark.read.textFile(dst)
     .toDF("text")
+//  df.cache()
   val tkn = new Tokenizer()
     .setInputCol("text")
     .setOutputCol("tokenizedWords")
   val tokenDF = tkn.transform(df.select("text"))
 
-  //remove english stopwords
+  //remove English stop words
   val englishStopWords = StopWordsRemover.loadDefaultStopWords("english")
   val stops = new StopWordsRemover()
     .setStopWords(englishStopWords)
@@ -32,12 +33,13 @@ object Day34Exercise extends App {
     .setInputCol("tokenizedWords")
     .setOutputCol("countVec")
     .setVocabSize(500)
-    .setMinTF(1)
-    .setMinDF(3)
+    .setMinTF(1) //term appears at least once
+    .setMinDF(3) //term appears in at least three documents
   val fittedCV = cv.fit(tokenDF)
 
   //show first 30 rows of data
   fittedCV.transform(tokenDF).show(30, false)
+  println(fittedCV.vocabulary.mkString(","))
 
   //the terms have to occur at least 1 time in each row
 

@@ -61,3 +61,78 @@
 22/08/22 20:45:54 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
 22/08/22 20:49:10 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
 22/08/22 20:50:49 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/22 21:19:25 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/22 21:23:00 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/22 21:33:21 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/22 21:33:50 WARN component.AbstractLifeCycle: FAILED ServerConnector@55f3c410{HTTP/1.1, (http/1.1)}{0.0.0.0:4040}: java.io.IOException: Failed to bind to /0.0.0.0:4040
+java.io.IOException: Failed to bind to /0.0.0.0:4040
+	at org.sparkproject.jetty.server.ServerConnector.openAcceptChannel(ServerConnector.java:349)
+	at org.sparkproject.jetty.server.ServerConnector.open(ServerConnector.java:310)
+	at org.sparkproject.jetty.server.AbstractNetworkConnector.doStart(AbstractNetworkConnector.java:80)
+	at org.sparkproject.jetty.server.ServerConnector.doStart(ServerConnector.java:234)
+	at org.sparkproject.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:73)
+	at org.apache.spark.ui.JettyUtils$.newConnector$1(JettyUtils.scala:303)
+	at org.apache.spark.ui.JettyUtils$.httpConnect$1(JettyUtils.scala:334)
+	at org.apache.spark.ui.JettyUtils$.$anonfun$startJettyServer$5(JettyUtils.scala:337)
+	at org.apache.spark.ui.JettyUtils$.$anonfun$startJettyServer$5$adapted(JettyUtils.scala:337)
+	at org.apache.spark.util.Utils$.$anonfun$startServiceOnPort$2(Utils.scala:2383)
+	at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:190)
+	at org.apache.spark.util.Utils$.startServiceOnPort(Utils.scala:2375)
+	at org.apache.spark.ui.JettyUtils$.startJettyServer(JettyUtils.scala:338)
+	at org.apache.spark.ui.WebUI.bind(WebUI.scala:147)
+	at org.apache.spark.SparkContext.$anonfun$new$11(SparkContext.scala:488)
+	at org.apache.spark.SparkContext.$anonfun$new$11$adapted(SparkContext.scala:488)
+	at scala.Option.foreach(Option.scala:437)
+	at org.apache.spark.SparkContext.<init>(SparkContext.scala:488)
+	at org.apache.spark.SparkContext$.getOrCreate(SparkContext.scala:2690)
+	at org.apache.spark.sql.SparkSession$Builder.$anonfun$getOrCreate$2(SparkSession.scala:949)
+	at scala.Option.getOrElse(Option.scala:201)
+	at org.apache.spark.sql.SparkSession$Builder.getOrCreate(SparkSession.scala:943)
+	at com.github.fyodiya.SparkUtilities$.getOrCreateSpark(SparkUtilities.scala:19)
+	at com.github.fyodiya.Day34ContinuousFeatures$.delayedEndpoint$com$github$fyodiya$Day34ContinuousFeatures$1(Day34ContinuousFeatures.scala:9)
+	at com.github.fyodiya.Day34ContinuousFeatures$delayedInit$body.apply(Day34ContinuousFeatures.scala:6)
+	at scala.Function0.apply$mcV$sp(Function0.scala:39)
+	at scala.Function0.apply$mcV$sp$(Function0.scala:39)
+	at scala.runtime.AbstractFunction0.apply$mcV$sp(AbstractFunction0.scala:17)
+	at scala.App.$anonfun$main$1(App.scala:76)
+	at scala.App.$anonfun$main$1$adapted(App.scala:76)
+	at scala.collection.IterableOnceOps.foreach(IterableOnce.scala:563)
+	at scala.collection.IterableOnceOps.foreach$(IterableOnce.scala:561)
+	at scala.collection.AbstractIterable.foreach(Iterable.scala:926)
+	at scala.App.main(App.scala:76)
+	at scala.App.main$(App.scala:74)
+	at com.github.fyodiya.Day34ContinuousFeatures$.main(Day34ContinuousFeatures.scala:6)
+	at com.github.fyodiya.Day34ContinuousFeatures.main(Day34ContinuousFeatures.scala)
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:461)
+	at sun.nio.ch.Net.bind(Net.java:453)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:222)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:85)
+	at org.sparkproject.jetty.server.ServerConnector.openAcceptChannel(ServerConnector.java:344)
+	... 36 more
+22/08/22 21:33:50 WARN util.Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+22/08/22 21:34:05 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/22 21:37:54 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/22 21:37:58 WARN netlib.InstanceBuilder$NativeBLAS: Failed to load implementation from:dev.ludovic.netlib.blas.JNIBLAS
+22/08/22 21:37:58 WARN netlib.InstanceBuilder$NativeBLAS: Failed to load implementation from:dev.ludovic.netlib.blas.ForeignLinkerBLAS
+22/08/22 21:38:01 WARN netlib.LAPACK: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+22/08/22 21:38:01 WARN netlib.LAPACK: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+22/08/22 21:42:59 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/22 21:46:27 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/22 21:46:29 WARN netlib.InstanceBuilder$NativeBLAS: Failed to load implementation from:dev.ludovic.netlib.blas.JNIBLAS
+22/08/22 21:46:29 WARN netlib.InstanceBuilder$NativeBLAS: Failed to load implementation from:dev.ludovic.netlib.blas.ForeignLinkerBLAS
+22/08/22 21:46:32 WARN netlib.LAPACK: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+22/08/22 21:46:32 WARN netlib.LAPACK: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+22/08/22 21:50:04 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/22 21:53:08 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/22 21:53:16 WARN netlib.InstanceBuilder$NativeBLAS: Failed to load implementation from:dev.ludovic.netlib.blas.JNIBLAS
+22/08/22 21:53:16 WARN netlib.InstanceBuilder$NativeBLAS: Failed to load implementation from:dev.ludovic.netlib.blas.ForeignLinkerBLAS
+22/08/22 21:53:19 WARN netlib.LAPACK: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+22/08/22 21:53:19 WARN netlib.LAPACK: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+22/08/22 21:54:29 WARN executor.ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+22/08/22 21:57:16 WARN zlib.ZlibFactory: Failed to load/initialize native-zlib library
+22/08/22 21:57:19 WARN netlib.InstanceBuilder$NativeBLAS: Failed to load implementation from:dev.ludovic.netlib.blas.JNIBLAS
+22/08/22 21:57:19 WARN netlib.InstanceBuilder$NativeBLAS: Failed to load implementation from:dev.ludovic.netlib.blas.ForeignLinkerBLAS
+22/08/22 21:57:22 WARN netlib.LAPACK: Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+22/08/22 21:57:22 WARN netlib.LAPACK: Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
