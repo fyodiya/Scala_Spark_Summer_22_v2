@@ -5,9 +5,9 @@ import org.apache.spark.ml.evaluation.ClusteringEvaluator
 import org.apache.spark.ml.feature.RFormula
 import org.apache.spark.sql.DataFrame
 
-object Clustering extends App {
+object Day37Clustering extends App {
 
-  println("Chapter 29: Clustering")
+  println("Chapter 29: Unsupervised learning, clustering etc.")
 
   val spark = SparkUtilities.getOrCreateSpark("sparky")
   val filePath = "src/resources/irises/iris.data"
@@ -84,14 +84,5 @@ object Clustering extends App {
 
   println("Silhouette scores from 2 to 8 K segments:")
   println(silhouettes.mkString(","))
-
-  //TODO find optimal number of segments in the src/resources/csv/cluster_me.csv file
-  //Use Silhouette calculations
-
-  //show dataframe with these optimal segments
-
-  //TODO to make it easier for you k will be in range from 2 to 20
-
-
 
 }
