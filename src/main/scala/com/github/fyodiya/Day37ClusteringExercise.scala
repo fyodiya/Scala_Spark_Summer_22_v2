@@ -99,4 +99,22 @@ object Day37ClusteringExercise extends App {
   //here we cans ee that the silhouette have worked perfectly as the max was indeed the best option
   //with real data you might need to play around with a couple of highest scores - remember the elbow method
 
+  clusteredDF
+    .repartition(10) //it will save in 10 partitions
+    .write
+    .format("parquet") //for csv we need to cast features to string or drop the column "features"
+//    .option("header", true)
+    .mode("overwrite")
+    .save("src/resources/parquet/clusteredAnswers.parquet")
+
+  clusteredDF
+    .drop("features")
+    .repartition(10) //it will save in 10 partitions
+    .write
+    .format("csv") //for csv we need to cast features to string or drop the column "features"
+    .option("header", value = true)
+    .mode("overwrite")
+    .save("src/resources/csv/clusteredAnswers.csv")
+
+
 }
