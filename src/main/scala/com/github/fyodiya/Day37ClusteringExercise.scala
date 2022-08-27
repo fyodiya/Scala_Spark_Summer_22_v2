@@ -3,12 +3,12 @@ package com.github.fyodiya
 import com.github.fyodiya.Day37Clustering.testKMeans
 import org.apache.spark.ml.clustering.KMeans
 import org.apache.spark.ml.evaluation.ClusteringEvaluator
-import org.apache.spark.ml.feature.RFormula
+import org.apache.spark.ml.feature.{RFormula, VectorAssembler}
 
 object Day37ClusteringExercise extends App {
 
 
-  //TODO find optimal number of segments in the src/resources/csv/cluster_me.csv file
+  //Find optimal number of segments in the src/resources/csv/cluster_me.csv file
   //Use Silhouette calculations
 
   val spark = SparkUtilities.getOrCreateSpark("sparky")
@@ -57,5 +57,46 @@ object Day37ClusteringExercise extends App {
   println(silhouettes.mkString(","))
 
 
+  val newFilePath = "src/resources/csv/cluster_me.csv"
+
+  val originalDF = spark.read
+    .format("csv")
+    .option("inferSchema", "true")
+    .load(newFilePath)
+    .toDF("col1", "col2")
+
+  val myVector = new VectorAssembler()
+    .setInputCols(Array("col1", "col2"))
+    .setOutputCol("features")
+
+  val clusterDF = myVector.transform(originalDF)
+
+  println()
+  println("******* New clustering data *******")
+  println()
+
+  val minCluster = 2
+  val maxCluster = 20
+  val newSilhouettes = (minCluster to maxCluster).map(n => testKMeans(clusterDF, n))
+  println("Silhouette scores from 2 to 20 K segments")
+  println(newSilhouettes.mkString(","))
+
+  val bestSilhouette = newSilhouettes.max
+  val bestNumClusters = newSilhouettes.indexOf(bestSilhouette) + minCluster
+
+  println()
+  println(s"******* The best number of clusters is ${bestNumClusters} with silhouette $bestSilhouette *******")
+  println()
+
+  val kMean = new KMeans().setK(bestNumClusters)
+  val clusteredDF = kMean.fit(clusterDF).transform(clusterDF)
+
+  println("Clustered DF:")
+  clusterDF.show(false)
+
+  clusteredDF.show(20, truncate = false)
+
+  //here we cans ee that the silhouette have worked perfectly as the max was indeed the best option
+  //with real data you might need to play around with a couple of highest scores - remember the elbow method
 
 }
