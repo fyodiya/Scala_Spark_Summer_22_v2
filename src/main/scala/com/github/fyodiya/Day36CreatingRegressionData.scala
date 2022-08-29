@@ -44,7 +44,7 @@ object Day36CreatingRegressionData extends App {
     .mode("overwrite")
     .save
 
-  //TODO condidtional expressions in spark SQL
+  //TODO conditional expressions in spark SQL
   //val dfNonLin = spark
   //    .range(100)
   //    .toDF()
