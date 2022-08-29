@@ -37,3 +37,7 @@ libraryDependencies += "org.apache.spark" %% "spark-streaming" % "3.2.2"
 
 // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
 libraryDependencies += "org.xerial" % "sqlite-jdbc" % "3.39.2.0"
+
+// https://mvnrepository.com/artifact/org.jsoup/jsoup
+libraryDependencies += "org.jsoup" % "jsoup" % "1.15.3"
+

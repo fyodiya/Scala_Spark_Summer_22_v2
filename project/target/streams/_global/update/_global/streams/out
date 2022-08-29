@@ -1,5 +1,3 @@
 [debug] not up to date. inChanged = true, force = false
 [debug] Updating ProjectRef(uri("file:/C:/Users/eafjo/IdeaProjects/work%20with%20Spark/project/"), "work-with-spark-build")...
-[warn] Unrecognized repository Scala Plugin Bundled Repository, ignoring it
-[warn] Unrecognized repository Scala Plugin Bundled Repository, ignoring it
 [debug] Done updating ProjectRef(uri("file:/C:/Users/eafjo/IdeaProjects/work%20with%20Spark/project/"), "work-with-spark-build")
